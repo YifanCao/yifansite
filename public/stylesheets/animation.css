@@ -181,7 +181,7 @@
 }
 
 @keyframes scaleup-imagebox {
-	100% { transform: scale(7, 7); opacity: 1; }	
+	100% { -webkit-transform: scale(7, 7); transform: scale(7, 7); opacity: 1; }	
 }
 
 @-webkit-keyframes fadeIn-bottom {

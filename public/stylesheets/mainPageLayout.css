@@ -80,8 +80,7 @@
 	width: 7.07vh;
 	margin: -5vh 0 0 -3.535vh;
 	overflow: hidden;
-	border: .3vh solid;
-	border-radius: .3vh;
+	border-radius: .5vh;
 	border-color: rgba(80,80,80,0.5);
 	pointer-events: none;
 	-webkit-transition: all .3s;
@@ -96,6 +95,7 @@
 
 .image-box > img {
 	height: 100%;
+	width: 100%;
 }
 
 .large-header {
