@@ -17,27 +17,18 @@ function initLightBox() {
 				return function(event) {
 					var overlay = document.getElementById("gray-overlay");
 					var imageBox = document.getElementById("image-box");
-					imageBox.style.opacity = "1";
 					imageBox.style.zIndex = "5";
 					imageBox.firstChild.setAttribute("src", lists[index].firstChild.firstChild.getAttribute("src"));
-					imageBox.style.height = "842px";
-					imageBox.style.width = "595px";
-					imageBox.style.marginTop = "-421px";
-					imageBox.style.marginLeft = "-297.5px";
 					imageBox.style.pointerEvents = "auto";
 					imageBox.style.cursor = "pointer";
+					classie.add(imageBox, 'animate');
 					imageBox.onclick = function() {
-						imageBox.style.height = "";
-						imageBox.style.width = "";
-						imageBox.style.marginLeft = "";
-						imageBox.style.marginTop = "";
-						overlay.style.opacity = "0";
 						overlay.style.zIndex = "0";
-						imageBox.style.opacity = "0";
+						overlay.style.opacity = "";
 						imageBox.style.zIndex = "0";
 						imageBox.style.pointerEvents = "none";
+						classie.remove(imageBox, 'animate');
 					};
-
 					overlay.style.opacity = "1";
 					overlay.style.zIndex = "4";
 					event.stopPropagation();

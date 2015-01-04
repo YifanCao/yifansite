@@ -76,21 +76,26 @@
 	opacity: 0;
 	top: 50%;
 	left: 50%;
-	height: 84.2px;
-	width: 59.5px;
-	margin: -42.1px 0 0 -29.75px;
+	height: 10vh;
+	width: 7.07vh;
+	margin: -5vh 0 0 -3.535vh;
 	overflow: hidden;
-	border: 10px solid;
-	border-radius: 10px;
+	border: .3vh solid;
+	border-radius: .3vh;
 	border-color: rgba(80,80,80,0.5);
 	pointer-events: none;
-	-webkit-transition: all .5s;
-	transition: all .5s;
+	-webkit-transition: all .3s;
+	transition: all .3s;
 }
 
+.image-box.animate {
+	-webkit-animation: scaleup-imagebox 0.3s both ease-in;
+	animation: scaleup-imagebox 0.3s both ease-in;
+}
+
+
 .image-box > img {
-	height: 842px;
-	width: 595px;
+	height: 100%;
 }
 
 .large-header {
@@ -201,8 +206,9 @@ li:nth-child(even) a {
 	position: absolute;
 	left: 50%;
 	top: 50%;
+	width: 300px;
 	margin-top: 200px;
-	margin-left: -140px;
+	margin-left: -150px;
 	opacity: 0.3;
 	-webkit-transition: all 2s;
 	transition: all 2s;
@@ -256,5 +262,19 @@ li:nth-child(even) a {
 	z-index: 2;
 	top: 90%;
 	left: 50%;
-	margin-left: -110px;
+	width: 200px;
+	margin-left: -100px;
+}
+
+.visitor-info p {
+	position : relative;
+	width : 100%;
+	margin: 5px auto;
+}
+
+.visitor-info input {
+	position : relative;
+	width : 100%;
+	margin : 0 auto;
+	text-align : center;
 }
