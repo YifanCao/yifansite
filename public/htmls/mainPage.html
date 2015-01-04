@@ -1,0 +1,46 @@
+<!--	
+*	Project name: Yifan's Personal Website (YFPW)
+*	Author: Yifan Cao
+*	FileName: mainPage.html
+*	Description: this is the routed main page of my personal website
+ -->
+<div class="themes">
+	<input type="radio" name="theme-selector" value="light" checked>Light
+	<input type="radio" name="theme-selector" value="startrail">Star Trail
+</div>
+
+<div id="lightspot">
+    	<ul>
+    		<li ng-repeat="image in images"><a><img style="{{ image.style }}" src="{{ image.src }}"></img></a></li>
+    	</ul>
+</div>
+
+<div class="theme-overlay" id="theme-overlay">
+</div>
+<div id="large-header" class="large-header">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div class="name" id="name" align="center">
+	<a ng-click='switch()' href="#profile/{{ visitorName || 'Visitor' }}"> Y I F A N </a>
+	<p class="note">a little fun fact about me</p>
+</div>
+
+<div class="visitor-info">
+	<p align="center">Welcome {{visitorName || 'Visitor'}}</p>
+	<p align="center" style="margin-left:-30px">Call me <input type="text" ng-model="visitorName" placeholder="you"></p>
+</div>
+
+<footer>
+<div id="music-player" class="music-player">
+	<p><span id="music-name">Music: Aimer - Hakuchuumu</span><span id="control-button" ng-click="control()" class="control-button">STOP</span></p>
+	<audio loop="loop" autoplay="autoplay">  
+		<source src="/music/Aimer-Hakuchuumu.mp3" type="audio/mpeg">
+	</audio>
+</div>
+<p style="padding:5px">{{time.now}}</p>
+</footer>
+
+<div class="gray-overlay" id="gray-overlay"></div>
+
+<div class="image-box" id="image-box"><img></img></div>

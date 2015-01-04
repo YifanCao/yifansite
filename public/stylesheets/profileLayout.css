@@ -1,0 +1,325 @@
+header {
+	background-color: rgba(255, 160, 103, 1);
+	position: absolute;
+	top: 0;
+	padding: 20px 300px;
+	border-radius: 40px;
+	border: 10px solid #FCDBC2;
+	left: 50%;
+	height: 17vh;
+	margin-left: -400px;
+	box-shadow: 0 10px rgba(220, 140, 103, 1);
+	z-index: 2;
+}
+
+.content {
+	position: absolute;
+	background-color: rgba(255, 160, 103, 1);
+	/*
+	box-shadow: 0 10px rgba(220, 140, 103, 1);
+	*/
+	padding: 40px;
+	border-radius: 20px;
+	border: 10px solid #FCDBC2;
+	width: 500px;
+	top: 40vh;
+	left: 50%;
+	margin-left: -300px;
+	z-index: 1;
+	font-family: 'Architects Daughter', cursive;
+	text-align: justify;
+	font-size: 1.5em;
+	overflow: scroll;
+	height: 45vh;
+	-webkit-animation: fadeIn-bottom 0.5s both ease-in;
+	animation: fadeIn-bottom 0.5s both ease-in;
+	-webkit-animation-delay: 1.5s;
+	animation-delay: 1.5s;
+}
+
+.content p {
+	margin: 0px;
+	padding: 10px 0;
+}
+
+.content-indicator {
+	border-left-color: transparent;
+	border-right-color: transparent;
+	border-top-color: #FCDBC2;
+	border-bottom-color: transparent;
+	border-style: solid;
+	border-width: 20px;
+	right: 5px;
+	position: absolute;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.profile {
+	position: relative;
+	width: 100%;
+	text-align: center;
+	font-size: 3em;
+}
+
+.profile-image {
+	left: 50%;
+	border-radius: 100%;
+	z-index: 3;
+	height: 24vh;
+	width: 24vh;
+	margin-top: 20vh;
+	margin-left: -12vh;
+	position: relative;
+	-webkit-animation: scaleup 0.5s backwards ease-in;
+	animation: scaleup 0.5s backwards ease-in;
+	-webkit-animation-delay: 1s;
+	animation-delay: 1s;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.profile-image-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 100%;
+	height: 24vh;
+	width: 24vh;
+}
+
+.profile-image:hover {
+	transform: scale(0.9, 0.9);
+	-webkit-transform: scale(0.9, 0.9);
+}
+
+.profile-image::before {
+	content: '';
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	border: 0px solid transparent;
+	background: transparent;
+	position: absolute;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.profile-image:hover:before {
+	-webkit-transform: scale(1.1, 1.1);
+	margin-left: -2.5%;
+	margin-top: -2.5%;
+	background: rgba(255, 160, 120, 0.3);
+	transform: scale(1.1, 1.1);
+	background: rgba(255, 160, 120, 0.3);
+	border: 5px solid white;
+}
+
+#painting-intro {
+	left: 20px;
+	bottom: 20px;
+}
+
+#coding-intro {
+	right: 20px;
+	bottom: 20px;
+}
+
+.painting-background {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 0%;
+	width: 20%;
+	opacity: 0;
+	background-color: #689687;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+	border: 5px solid;
+	border-left-color: #FCDBC2;
+	border-right-color: #FCDBC2;
+	border-bottom-color: transparent;
+	z-index: 1;
+	-webkit-transform: skew(-10deg);
+	transform: skew(-10deg);
+}
+
+.code-background {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	height: 0%;
+	width: 20%;
+	opacity: 0;
+	background-color: #966877;
+	-webkit-transtion: all 0.5s;
+	transition: all 0.5s;
+	border: 5px solid;
+	border-left-color: #FCDBC2;
+	border-right-color: #FCDBC2;
+	border-bottom-color: transparent;
+	z-index: 1;
+	-webkit-transform: skew(10deg);
+	transform: skew(10deg);
+}
+
+.intro:hover + .painting-background {
+	opacity: 1;
+	height: 100%;
+}
+
+ .intro:hover + .code-background  {
+	opacity: 1;
+	height: 100%;
+}
+
+.intro {
+	height: 150px;
+	width: 150px;
+	font-size: 2em;
+	text-align: center;
+	border-radius: 100%;
+	border: 5px solid #FCDBC2;
+	z-index: 2;
+	position: absolute;
+	background-color: rgba(255, 160, 103, 1);
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+	-webkit-animation: scaleup 0.5s both ease-in;
+	animation: scaleup 0.5s both ease-in;
+	-webkit-animation-delay: 2s;
+	animation-delay: 2s;
+}
+
+.intro::before {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	content: '';
+	border: 0px solid transparent;
+	background: transparent;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+	position: absolute;
+}
+
+.intro > p {
+	z-index: 3;
+	position: relative;
+	top: 15%;
+}
+
+.intro:hover {
+	font-size: 1.5em;
+	height: 100px;
+	width: 100px;
+	margin-top: 25px;
+	background-color: rgba(255, 200, 130, 1);
+}
+
+.intro:hover:before {
+	width: 130%;
+	height: 130%;
+	margin-top: -25%;
+	margin-left: -25%;
+	border-width: 10px;
+
+}
+
+#painting-intro.intro:hover:before {
+	background: rgba(87, 240, 161, .2);
+	border-bottom-color: rgba(87, 218, 161, .7);
+}
+
+#coding-intro.intro:hover:before {
+	background:  rgba(255, 143, 156, .2);
+	border-bottom-color:  rgba(248, 146, 156, .7);
+}
+
+#painting-intro:hover {
+	margin-left: 25px;
+}
+
+#coding-intro:hover {
+	margin-right: 25px;
+}
+
+.fade-animate-wrapper {
+	position: absolute;
+	background-color: transparent;
+	color: transparent;
+	padding: 40px;
+	width: 500px;
+	top: 40vh;
+	left: 50%;
+	margin-left: -300px;
+	height: 45vh;
+}
+
+.fade-animate {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 20px;
+	border: 10px solid;
+	border-color: transparent;
+}
+
+.content:hover + .fade-animate-wrapper > .fade-one,
+.content:hover + .fade-animate-wrapper > .fade-two,
+.content:hover + .fade-animate-wrapper > .fade-three,
+.content:hover + .fade-animate-wrapper > .fade-four {
+	-webkit-animation: content-scaleup 2s both ease-in infinite;
+	animation: content-scaleup 2s both ease-in infinite;
+}
+
+.content:hover + .fade-animate-wrapper > .fade-two {
+	-webkit-animation-delay: .5s;
+	animation-delay: .5s;
+}
+
+.content:hover + .fade-animate-wrapper > .fade-three {
+	-webkit-animation-delay: 1s;
+	animation-delay: 1s;
+}
+
+.content:hover + .fade-animate-wrapper > .fade-four {
+	-webkit-animation-delay: 1.5s;
+	animation-delay: 1.5s;
+}
+
+.background-strip-green {
+	position: absolute;
+	top: 30%;
+	left: 0;
+	width: 0%;
+	height: 20%;
+	opacity: 0;
+	background-color: rgba(90, 149, 130, 0.8);
+	-webkit-animation: enlarge-width 0.5s both ease-in;
+	animation: enlarge-width 0.5s both ease-in;
+	-webkit-animation-delay: 2.5s;
+	animation-delay: 2.5s;
+}
+
+.background-strip-purple {
+	position: absolute;
+	top: 60%;
+	right: 0;
+	width: 0%;
+	height: 20%;
+	opacity: 0;
+	background-color: rgba(149, 112, 130, 0.8);
+	-webkit-animation: enlarge-width 0.5s both ease-in;
+	animation: enlarge-width 0.5s both ease-in;
+	-webkit-animation-delay: 3s;
+	animation-delay: 3s;
+}
+
+

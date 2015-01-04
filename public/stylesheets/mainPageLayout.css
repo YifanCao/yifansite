@@ -1,0 +1,260 @@
+/* 
+*	Project name: Yifan's Personal Website (YFPW)
+*	Author: Yifan Cao
+*	FileName: mainPageLayout.css
+*	Description: this file contains the css layout rules for the main page
+ */
+
+.music-player {
+	position: absolute;
+	left: 0;
+	bottom: 50px;
+	background-color: rgba(74, 129, 133, 0.8);
+	padding: 2px 0;
+	-webkit-animation: slide-in 0.5s both ease-in;
+	animation: slide-in 0.5s both ease-in;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+#music-name {
+	padding: 0 10px;
+	cursor: default;
+}
+
+.control-button {
+	background-color: rgba(74, 180, 150, 0.8);
+	padding: 18px 10px;
+	text-align: center;
+	cursor: pointer;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.control-button:hover {
+	background-color: rgba(74, 220, 180, 1);
+}
+
+.theme-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-size: contain;
+	background-color: black;
+	opacity: 0;
+	-webkit-transition: opacity 1s;
+	transition: opacity 1s;
+	z-index: 1;
+}
+
+.gray-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.7);
+	opacity: 0;
+	-webkit-transition: opacity 1s;
+	transition: opacity 1s;
+	z-index: 0;
+}
+
+.themes {
+	position: fixed;
+	left: 20px;
+	top: 20px;
+	background-color: hsla(212, 39%, 26%, 0.5);
+	z-index: 2;
+}
+
+.image-box {
+	overflow: hidden;
+	position: fixed;
+	opacity: 0;
+	top: 50%;
+	left: 50%;
+	height: 84.2px;
+	width: 59.5px;
+	margin: -42.1px 0 0 -29.75px;
+	overflow: hidden;
+	border: 10px solid;
+	border-radius: 10px;
+	border-color: rgba(80,80,80,0.5);
+	pointer-events: none;
+	-webkit-transition: all .5s;
+	transition: all .5s;
+}
+
+.image-box > img {
+	height: 842px;
+	width: 595px;
+}
+
+.large-header {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center center;
+	z-index: 1;
+}
+
+#lightspot {
+	cursor: pointer;
+	overflow: hidden;
+	position: absolute;
+	z-index: 2;
+	left: 50%;
+	top: 50%;
+	margin-left: -100px;
+	margin-top: -100px;
+	width: 200px;
+	height: 200px;
+	border-radius: 200px;
+	opacity: 0;
+	-webkit-transition: all 2s;
+	transition: all 2s;
+    background: -webkit-radial-gradient(rgba(255,255,255,1), rgba(255,255,255,0.5), rgba(149, 185, 196, 0.5), rgba(69, 94, 102, 0)); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(rgba(255,255,255,1), rgba(255,255,255,0.5), rgba(149, 185, 196, 0.5), rgba(69, 94, 102, 0)); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(rgba(255,255,255,1), rgba(255,255,255,0.5), rgba(149, 185, 196, 0.5), rgba(69, 94, 102, 0)); /* For Firefox 3.6 to 15 */
+    background: radial-gradient(rgba(255,255,255,1), rgba(255,255,255,0.5), rgba(149, 185, 196, 0.5), rgba(69, 94, 102, 0)); /* Standard syntax (must be last) */
+}
+
+#lightspot:hover {
+	opacity: 1;
+	width: 300px;
+	height: 300px;
+	border-radius: 150px;
+	margin-left: -150px;
+	margin-top: -150px;
+
+}
+
+#lightspot li {
+	pointer-events: none;
+	position: absolute;
+	font-size: 1.5em;
+	width: 400px;
+	height: 400px;
+	transform-origin: 100% 100%;
+	overflow: hidden;
+	left: 50%;
+	top: 50%;
+	margin-top: -400px;
+	margin-left: -400px;
+	transform: skew(50deg);
+	transition: all 3s ease;
+	-webkit-transition-delay: 1s; /* Safari */
+    transition-delay: 1s;
+	opacity: 0;
+}
+
+#lightspot li a {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  position: fixed; /* fix the "displacement" bug in webkit browsers when using tab key */
+  text-align: center;
+  -webkit-transition-delay: 1s; /* Safari */
+  transition-delay: 1s;
+  transition: all 3s ease;
+  overflow: hidden;
+}
+
+ 
+#lightspot li a img {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  font-size: 1.1em;
+  opacity: 0.5;
+  height: 842px;
+  width: 595px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  transform: skew(-50deg);
+}
+
+#lightspot li a img:hover {
+	opacity: 1;
+}
+/* for a central angle x, the list items must be skewed by 90-x degrees
+in our case x=40deg so skew angle is 50deg
+items should be rotated by x, minus (sum of angles - 180)2s */
+ 
+#lightspot li:nth-child(odd) a {
+  background-color: hsla(203, 33%, 39%, 1);
+}
+ 
+li:nth-child(even) a {
+  background-color: hsla(203, 33%, 42%, 1);
+}
+
+.name {
+	z-index: 2;
+	font-size: 3em;
+	text-align: center;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: 200px;
+	margin-left: -140px;
+	opacity: 0.3;
+	-webkit-transition: all 2s;
+	transition: all 2s;
+}
+
+.name > a {
+	color: white;
+}
+
+.name:hover {
+	opacity: 1;
+}
+
+.note {
+	font-size: 45%;
+	background-color: hsla(212, 39%, 26%, 0.5);
+	padding: 5px 20px;
+	opacity: 0;
+	margin-top:  -20px;
+	-webkit-transition: all .5s;
+	transition: all .5s;
+	border-radius: 5px;
+	color: white;
+}
+
+.note:after {
+	border-left-color: transparent;
+	border-right-color: transparent;
+	border-top-color: transparent;
+	border-bottom-color: hsla(212, 39%, 26%, 0.5);
+	content: "";
+	position: absolute;
+	top: 16px;
+	left: 50%;
+	margin-left: -10px;
+	margin-top: -20px;
+	border-style: solid;
+	border-width: 20px;
+	-webkit-transition: all .5s;
+	transition: all .5s;
+	display: block;
+}
+
+.name:hover > .note, .name:hover > .note:after {
+	opacity: 1;
+	margin-top: 20px;
+}
+
+.visitor-info {
+	position: absolute;
+	z-index: 2;
+	top: 90%;
+	left: 50%;
+	margin-left: -110px;
+}
