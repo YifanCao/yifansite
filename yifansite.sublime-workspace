@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"mainPage",
+				"mainPageLightbox"
+			],
+			[
+				"light",
+				"lightbox"
+			],
+			[
+				"lightbox",
+				"lightboxClickHandler"
+			],
+			[
+				"back",
+				"backgroundColor"
+			],
+			[
+				"contro",
+				"controlBtn"
+			],
+			[
 				"max",
 				"max-height"
 			],
@@ -62,10 +82,6 @@
 			[
 				"text",
 				"text-align"
-			],
-			[
-				"back",
-				"background-color"
 			],
 			[
 				"z",
@@ -200,14 +216,6 @@
 	"buffers":
 	[
 		{
-			"file": "public/stylesheets/globalLayout.css",
-			"settings":
-			{
-				"buffer_size": 2054,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "/C/Program Files/apache-tomcat-8.0.14-windows-x64/apache-tomcat-8.0.14/webapps/test/server/route.js",
 			"settings":
 			{
@@ -216,13 +224,26 @@
 			}
 		},
 		{
-			"contents": "/*\n*	Project name: Yifan's Personal Website (YFPW)\n*	Author: Yifan Cao\n*	FileName: controller.js\n*	Description: this file provides angularjs controller \"MainCtrl\" to the main page's app scope \"app\"\n*/\n\nvar app = angular.module(\"app\", ['ngRoute', 'ngAnimate']);\napp.\nrun(function($animate, $timeout) {\n	$animate.enabled(false);\n	$timeout(function() {\n		$animate.enabled(true);\n	}, 1000);\n});\n\napp.\nconfig(function($routeProvider) {\n	$routeProvider.\n		when(\"/main\", {templateUrl: \"/htmls/mainPage.html\", controller: MainCtrl}).\n		when(\"/profile/:visitorname\", {templateUrl: \"/htmls/profile.html\", controller: ProfileCtrl}).\n		when(\"/paintings/:visitorname\", {templateUrl: \"/htmls/paintings.html\", controller: PaintingsCtrl}).\n		when(\"/code/:visitorname\", {templateUrl: \"/htmls/code.html\", controller: CodeCtrl}).\n		otherwise({templateUrl: \"/htmls/mainPage.html\", controller: MainCtrl});\n});\n\napp.\nfactory(\"time\", function($timeout) {\n	var time = {};\n	function tick(){\n		time.now = new Date().toString().substring(0, 24);\n		time.timer = $timeout(tick, 1000);\n	}\n	time.start = function() {\n		tick();\n	}\n	time.stop = function() {\n		if (time.timer !== undefined && time.timer != null) {\n			$timeout.cancel(time.timer);\n		}\n	}\n	return time;\n});\n\napp.\nservice(\"canvasAnimation\", CanvasAnimation);\n\napp.directive('onLastRepeat', function($timeout) {\n	return function(scope, element, attrs) {\n		if (scope.$last) {\n			$timeout(initPaintingGrid, 1);\n		}\n	};\n});\n\nfunction MainCtrl($rootScope, $scope, time, $log, canvasAnimation) {\n	time.start();\n	canvasAnimation.startAnimation();\n	initLightBox();\n	$scope.time = time;\n	$rootScope.animation = '';\n	$scope.pageClass = 'mainPage';\n\n	//TO-DO: once we build back-end service, we should get images from the back-end\n	$scope.images = [ { style:\"margin-top: -150px; margin-left: -590px;\", src:\"/images/1.jpg\" }, \n					  { style:\"margin-top: -230px; margin-left: -440px;\", src:\"/images/2.jpg\" },\n					  { style:\"margin-top: -300px; margin-left: -10px; transform: skew(-50deg) rotate(-70deg)\", src:\"/images/9.jpg\" },\n					  { style:\"margin-top: -300px; margin-left: -30px; transform: skew(-50deg) rotate(-110deg)\", src:\"/images/7.jpg\" },\n					  { style:\"margin-top: -500px; margin-left: 50px; transform: skew(-50deg) rotate(-150deg)\", src:\"/images/8.jpg\" } ];\n\n	var controlBtn = document.getElementById('control-button');\n	var audio = document.getElementsByTagName('audio')[0];\n	var stop = false;\n	$scope.control = function() {\n		stop = !stop;\n		if (stop) {\n			controlBtn.innerHTML = 'PLAY';\n			audio.pause();\n		} else {\n			controlBtn.innerHTML = 'STOP';\n			audio.play();\n		}\n	}\n\n	$rootScope.$on('$routeChangeStart', function(event, next, current) {\n		canvasAnimation.cancelAnimation();\n		time.stop();\n	});\n}\n \nfunction ProfileCtrl($rootScope, $scope, $routeParams, $rootScope, $log, $timeout) {\n	$timeout(function() {\n		$rootScope.animation = '';\n	}, 1000);\n\n	$scope.pageClass = 'profilePage';\n	$scope.visitorName = $routeParams.visitorname;\n	\n	var content = document.getElementById('content');\n	var contentIndicator = document.getElementById('content-indicator');\n	var innerContent = document.getElementById('inner-content');\n	contentIndicator.style.top = Math.min((content.scrollTop + content.clientHeight - 30), innerContent.scrollHeight + 40) + 'px';\n	content.onscroll = function(event) {\n		contentIndicator.style.top = Math.min((content.scrollTop + content.clientHeight - 30), innerContent.scrollHeight + 40) + 'px';\n		if (content.scrollTop + content.clientHeight === content.scrollHeight) {\n			contentIndicator.style.opacity = '0';\n		} else {\n			contentIndicator.style.opacity = '1';\n		}\n	};\n	$scope.switch = function() {\n		$rootScope.animation = 'onchange-subprofile';\n	}\n}\n\nfunction PaintingsCtrl($rootScope, $scope, $log, $routeParams, $http) {\n	$scope.pageClass = 'paintingPage';\n	$scope.visitorName = $routeParams.visitorname;\n	$scope.paintings = [ { src:\"/images/1.jpg\" }, \n						 { src:\"/images/2.jpg\" },\n						 { src:\"/images/3.jpg\" },\n						 { src:\"/images/4.jpg\" },\n						 { src:\"/images/5.jpg\" },\n						 { src:\"/images/6.jpg\" },\n						 { src:\"/images/7.jpg\" },\n						 { src:\"/images/8.jpg\" },\n						 { src:\"/images/9.jpg\" },\n						 { src:\"/images/10.jpg\" },\n						 { src:\"/images/11.jpg\" },\n						 { src:\"/images/12.jpg\" },\n						 { src:\"/images/13.jpg\" },\n						 { src:\"/images/14.jpg\" },\n						 { src:\"/images/15.jpg\" },\n						 { src:\"/images/16.jpg\" } ];\n}\n\nfunction CodeCtrl($rootScope, $scope, $routeParams) {\n	$scope.pageClass = 'codePage';\n	$scope.visitorName = $routeParams.visitorname;\n}\n\n",
 			"file": "public/javascripts/controller.js",
-			"file_size": 4680,
-			"file_write_time": 130648263886914282,
 			"settings":
 			{
-				"buffer_size": 4546,
+				"buffer_size": 6311,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/stylesheets/globalLayout.css",
+			"settings":
+			{
+				"buffer_size": 1957,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/javascripts/mainPageLightbox.js",
+			"settings":
+			{
+				"buffer_size": 2195,
 				"line_ending": "Windows"
 			}
 		},
@@ -230,7 +251,7 @@
 			"file": "views/index.ejs",
 			"settings":
 			{
-				"buffer_size": 2121,
+				"buffer_size": 2131,
 				"line_ending": "Windows"
 			}
 		},
@@ -239,6 +260,14 @@
 			"settings":
 			{
 				"buffer_size": 3716,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/javascripts/mainPageAnimation.js",
+			"settings":
+			{
+				"buffer_size": 8019,
 				"line_ending": "Windows"
 			}
 		},
@@ -262,7 +291,7 @@
 			"file": "public/htmls/mainPage.html",
 			"settings":
 			{
-				"buffer_size": 1490,
+				"buffer_size": 1495,
 				"line_ending": "Windows"
 			}
 		},
@@ -279,14 +308,6 @@
 			"settings":
 			{
 				"buffer_size": 1654,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/htmls/code.html",
-			"settings":
-			{
-				"buffer_size": 174,
 				"line_ending": "Windows"
 			}
 		},
@@ -383,6 +404,9 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Yifan/yifansite/node_modules/express/lib/middleware/query.js",
+		"/C/Users/Yifan/yifansite/public/javascripts/controller.js",
+		"/C/Users/Yifan/yifansite/public/htmls/code.html",
 		"/C/Users/Yifan/yifansite/public/javascripts/lightbox.js",
 		"/C/Program Files (x86)/World of Warcraft/WTF/Config.wtf",
 		"/C/Program Files/apache-tomcat-8.0.14-windows-x64/apache-tomcat-8.0.14/webapps/test/js/gridScrollFx.js",
@@ -420,7 +444,7 @@
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -437,6 +461,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"pageclass",
 			"ejs",
 			"clear",
 			"showMe",
@@ -509,40 +534,11 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "public/stylesheets/globalLayout.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2054,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1792,
-								1792
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1296.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "/C/Program Files/apache-tomcat-8.0.14-windows-x64/apache-tomcat-8.0.14/webapps/test/server/route.js",
 					"semi_transient": false,
 					"settings":
@@ -566,24 +562,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "public/javascripts/controller.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4546,
+						"buffer_size": 6311,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3885,
-								3885
+								1267,
+								1267
 							]
 						],
 						"settings":
@@ -591,28 +587,86 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 27.0,
-						"translation.y": 1944.0,
+						"translation.x": 0.0,
+						"translation.y": 792.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "views/index.ejs",
+					"buffer": 2,
+					"file": "public/stylesheets/globalLayout.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2121,
+						"buffer_size": 1957,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								463,
-								463
+								1776,
+								1776
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1848.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/javascripts/mainPageLightbox.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2195,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1550,
+								1550
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "views/index.ejs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2131,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1114,
+								1114
 							]
 						],
 						"settings":
@@ -622,14 +676,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 264.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "public/javascripts/paintingGrid.js",
 					"semi_transient": false,
 					"settings":
@@ -651,14 +705,44 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1890.0,
+						"translation.y": 1958.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
+					"file": "public/javascripts/mainPageAnimation.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8019,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2742,
+								2741
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1386.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "package.json",
 					"semi_transient": false,
 					"settings":
@@ -684,11 +768,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "public/stylesheets/mainPageLayout.css",
 					"semi_transient": false,
 					"settings":
@@ -700,8 +784,8 @@
 						"selection":
 						[
 							[
-								5479,
-								5479
+								743,
+								743
 							]
 						],
 						"settings":
@@ -710,27 +794,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4536.0,
+						"translation.y": 330.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 9,
 					"file": "public/htmls/mainPage.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1490,
+						"buffer_size": 1495,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								502,
-								502
+								1088,
+								1046
 							]
 						],
 						"settings":
@@ -741,11 +825,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 10,
 					"file": "public/htmls/paintings.html",
 					"semi_transient": false,
 					"settings":
@@ -769,11 +853,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "public/htmls/profile.html",
 					"semi_transient": false,
 					"settings":
@@ -785,8 +869,8 @@
 						"selection":
 						[
 							[
-								591,
-								591
+								343,
+								343
 							]
 						],
 						"settings":
@@ -798,39 +882,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
-					"file": "public/htmls/code.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 174,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								174,
-								174
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
+					"buffer": 12,
 					"file": "public/stylesheets/paintingPageLayout.css",
 					"semi_transient": false,
 					"settings":
@@ -842,8 +898,8 @@
 						"selection":
 						[
 							[
-								388,
-								388
+								139,
+								139
 							]
 						],
 						"settings":
@@ -851,15 +907,15 @@
 							"syntax": "Packages/CSS/CSS.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 702.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 13,
 					"file": "public/stylesheets/animation.css",
 					"semi_transient": false,
 					"settings":
@@ -871,8 +927,8 @@
 						"selection":
 						[
 							[
-								3152,
-								3152
+								688,
+								688
 							]
 						],
 						"settings":
@@ -881,14 +937,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3055.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 14,
 					"file": "public/stylesheets/icono.min.css",
 					"semi_transient": false,
 					"settings":
@@ -913,7 +969,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -921,7 +977,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 30.0
 	},
 	"input":
 	{
@@ -957,7 +1013,7 @@
 	"project": "yifansite.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 56.0
 	},
 	"save_all_on_build": true,
 	"select_file":
