@@ -13,7 +13,7 @@ run(function($animate, $timeout) {
 		$animate.enabled(true);
 	}, 1000);
 });
-
+//front-end router
 app.
 config(function($routeProvider) {
 	$routeProvider.
@@ -23,7 +23,7 @@ config(function($routeProvider) {
 		when("/code/:visitorname", {templateUrl: "/htmls/code.html", controller: CodeCtrl}).
 		otherwise({templateUrl: "/htmls/mainPage.html", controller: MainCtrl});
 });
-
+//timer factory used in main view
 app.
 factory("time", function($timeout) {
 	var time = {};
@@ -41,9 +41,45 @@ factory("time", function($timeout) {
 	}
 	return time;
 });
-
+//factory to change theme color of social media navi bar
 app.
-service("canvasAnimation", CanvasAnimation);
+factory("changeSocialMediaTheme", function($log) {
+	return function(pageClass) {
+		$log.log(pageClass);
+		var navis = document.querySelectorAll('.social-navibar li');
+		var backgroundColor, textColor;
+		if (pageClass == 'mainPage') {
+			backgroundColor = 'rgba(157,188,201,1)';
+			textColor = 'rgba(4,28,38,1)';
+		} else if (pageClass == 'profilePage') {
+			backgroundColor = '#FCDBC2';
+			textColor = 'rgba(100, 50, 30, 1)';
+		} else if (pageClass == 'paintingPage') {
+			backgroundColor = 'rgba(150, 250, 210, 1)';
+			textColor = 'rgba(44, 161, 122, 1)';
+		} else if (pageClass == 'codePage') {
+			backgroundColor = 'rgba(180, 140, 228, 1)';
+			textColor = 'rgba(50, 20, 80, 1)';
+		}
+		for (var i = 0; i < navis.length; i++) {
+			navis[i].addEventListener('mouseover', (function(navi, icon){
+				return function() {
+					navi.style.backgroundColor = backgroundColor;
+					icon.style.color = textColor;
+				};
+			})(navis[i], navis[i].firstChild.firstChild));	
+			navis[i].addEventListener('mouseout', (function(navi, icon){
+				return function() {
+					navi.style.backgroundColor = '';
+					icon.style.color = '#fff';
+				};
+			})(navis[i], navis[i].firstChild.firstChild));
+		}
+	}
+});
+//mainPageAnimation service for main view
+app.
+service("mainPageAnimation", MainPageAnimation);
 
 app.directive('onLastRepeat', function($timeout) {
 	return function(scope, element, attrs) {
@@ -53,14 +89,21 @@ app.directive('onLastRepeat', function($timeout) {
 	};
 });
 
-function MainCtrl($rootScope, $scope, time, $log, canvasAnimation) {
+app.
+service("mainPageLightbox", MainPageLightbox);
+
+function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme) {
 	time.start();
-	canvasAnimation.startAnimation();
-	initLightBox();
+	mainPageAnimation.startAnimation();
+	mainPageLightbox.init();
 	$scope.time = time;
 	$rootScope.animation = '';
 	$scope.pageClass = 'mainPage';
-
+	changeSocialMediaTheme($scope.pageClass);
+	var controlBtn = document.getElementById('control-button');
+	var audio = document.getElementsByTagName('audio')[0];
+	var stop = false;
+	controlBtn.innerHTML = 'STOP';
 	//TO-DO: once we build back-end service, we should get images from the back-end
 	$scope.images = [ { style:"margin-top: -150px; margin-left: -590px;", src:"/images/1.jpg" }, 
 					  { style:"margin-top: -230px; margin-left: -440px;", src:"/images/2.jpg" },
@@ -68,10 +111,8 @@ function MainCtrl($rootScope, $scope, time, $log, canvasAnimation) {
 					  { style:"margin-top: -300px; margin-left: -30px; transform: skew(-50deg) rotate(-110deg)", src:"/images/7.jpg" },
 					  { style:"margin-top: -500px; margin-left: 50px; transform: skew(-50deg) rotate(-150deg)", src:"/images/8.jpg" } ];
 
-	var controlBtn = document.getElementById('control-button');
-	var audio = document.getElementsByTagName('audio')[0];
-	var stop = false;
-	$scope.control = function() {
+
+	$scope.audioControl = function() {
 		stop = !stop;
 		if (stop) {
 			controlBtn.innerHTML = 'PLAY';
@@ -83,17 +124,19 @@ function MainCtrl($rootScope, $scope, time, $log, canvasAnimation) {
 	}
 
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
-		canvasAnimation.cancelAnimation();
+		mainPageAnimation.cancelAnimation();
+		mainPageLightbox.destroy();
 		time.stop();
 	});
 }
  
-function ProfileCtrl($rootScope, $scope, $routeParams, $rootScope, $log, $timeout) {
+function ProfileCtrl($rootScope, $scope, $routeParams, $rootScope, $log, $timeout,changeSocialMediaTheme) {
 	$timeout(function() {
 		$rootScope.animation = '';
 	}, 1000);
 
 	$scope.pageClass = 'profilePage';
+	changeSocialMediaTheme($scope.pageClass);
 	$scope.visitorName = $routeParams.visitorname;
 	
 	var content = document.getElementById('content');
@@ -113,8 +156,9 @@ function ProfileCtrl($rootScope, $scope, $routeParams, $rootScope, $log, $timeou
 	}
 }
 
-function PaintingsCtrl($rootScope, $scope, $log, $routeParams) {
+function PaintingsCtrl($rootScope, $scope, $log, $routeParams, $http, changeSocialMediaTheme) {
 	$scope.pageClass = 'paintingPage';
+	changeSocialMediaTheme($scope.pageClass);
 	$scope.visitorName = $routeParams.visitorname;
 	$scope.paintings = [ { src:"/images/1.jpg" }, 
 						 { src:"/images/2.jpg" },
@@ -134,8 +178,9 @@ function PaintingsCtrl($rootScope, $scope, $log, $routeParams) {
 						 { src:"/images/16.jpg" } ];
 }
 
-function CodeCtrl($rootScope, $scope, $routeParams) {
+function CodeCtrl($rootScope, $scope, $routeParams, changeSocialMediaTheme) {
 	$scope.pageClass = 'codePage';
+	changeSocialMediaTheme($scope.pageClass);
 	$scope.visitorName = $routeParams.visitorname;
 }
 

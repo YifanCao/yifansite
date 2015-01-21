@@ -18,15 +18,20 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-animate.js"></script>
 	<link href='//fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/stylesheets/icono.min.css">
 </head>
 <body ng-app="app">
+    <ul class="social-navibar">
+        <li><a href="https://www.facebook.com/eric.cao.777"><span class="icono-facebook"></span></a></li>
+        <li><a href="https://www.linkedin.com/pub/yifan-eric-cao/46/781/828"><span class="icono-linkedIn"></span></a></li>
+    </ul>
     <div id="page" class="page {{ pageClass + ' ' + animation }}" ng-view></div>
     <script src="/javascripts/requestAnimationFrame.js"></script>
     <script src="/javascripts/classie.js"></script>
     <script src="/javascripts/colorfinder-1.1.js"></script>
-    <script src="/javascripts/lightbox.js"></script>
+    <script src="/javascripts/mainPageLightbox.js"></script>
     <script src="/javascripts/paintingGrid.js"></script>
-    <script src="/javascripts/canvasAnimation.js"></script>
+    <script src="/javascripts/mainPageAnimation.js"></script>
     <script src="/javascripts/controller.js"></script>
     <link href="/stylesheets/animation.css" rel="stylesheet" type="text/css">
     <link rel='stylesheet' href="/stylesheets/globalLayout.css" type='text/css'>

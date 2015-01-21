@@ -91,11 +91,13 @@ function initPaintingGrid() {
 	GridItem.prototype.addCurtain = function() {
 		this.curtain = document.createElement('div');
 		this.curtain.className = 'curtain';
+		var image = new Image();
+		image.src = this.img.src;
 		var rgb = new ColorFinder( function favorHue(r,g,b) {
 			// exclude white
 			//if (r>245 && g>245 && b>245) return 0;
 			return (Math.abs(r-g)*Math.abs(r-g) + Math.abs(r-b)*Math.abs(r-b) + Math.abs(g-b)*Math.abs(g-b))/65535*50+1;
-		} ).getMostProminentColor( this.img );
+		} ).getMostProminentColor( image );
 		if( rgb.r && rgb.g && rgb.b ) {
 			this.curtain.style.background = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
 		}
@@ -118,7 +120,7 @@ function initPaintingGrid() {
 	}
 
 	function init() {
-		var paintingList = document.getElementsByTagName('li');
+		var paintingList = document.querySelectorAll('.painting-frame');
 		gridItems = [];
 		for (var i = 0; i < paintingList.length; i++) {
 			var gridItem = new GridItem(paintingList[i]);

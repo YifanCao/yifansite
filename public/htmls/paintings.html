@@ -1,4 +1,4 @@
-<a href="#profile/{{ visitorName || 'Visitor' }}" class="back-button">Back to Profile</a>
+<a href="#profile/{{ visitorName || 'Visitor' }}" class="back-button"><span class="icono-reset"></span></a>
 <div class="paintings-container" id="paintings-container">
 	<ul>
 		<li class="painting-frame" ng-repeat= "painting in paintings" on-last-repeat><div class="painting-wrapper"><img src="{{ painting.src }}"></div></li>

@@ -1,10 +1,18 @@
-function initLightBox() {
+function MainPageLightbox() {
 	var lightbox = document.getElementById('lightspot');
 	var clickbefore = false;
 	var name = document.getElementById("name");
 
-	lightbox.onclick = function() {
-		var lists = document.querySelectorAll("li");
+	this.init = function() {
+		lightbox.onclick = lightboxClickHandler;
+	};
+
+	this.destroy = function() {
+		lightbox.onclick = null;
+	};
+
+	function lightboxClickHandler() {
+		var lists = document.querySelectorAll("#lightspot li");
 		if (!clickbefore) {
 			lightbox.style.width = "800px";
 			lightbox.style.height = "800px";
@@ -30,7 +38,7 @@ function initLightBox() {
 						classie.remove(imageBox, 'animate');
 					};
 					overlay.style.opacity = "1";
-					overlay.style.zIndex = "4";
+					overlay.style.zIndex = "5";
 					event.stopPropagation();
 				};
 			}

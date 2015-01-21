@@ -1,4 +1,4 @@
-function CanvasAnimation() {
+function MainPageAnimation() {
 
     //public member methods
     this.startAnimation = function() {
@@ -71,15 +71,31 @@ function CanvasAnimation() {
             var audio = document.getElementsByTagName('audio')[0];
             var musicPlayer = document.getElementById('music-player');
             var musicName = document.getElementById('music-name');
+            var controlBtn = document.getElementById('control-button');
             if (currState == 'light') {
                 audio.src = '/music/Aimer-Hakuchuumu.mp3';
                 musicName.innerHTML = 'Music: Aimer - Hakuchuumu';
                 musicPlayer.style.backgroundColor = 'rgba(74, 129, 133, 0.8)';
+                controlBtn.style.backgroundColor = 'rgba(74, 180, 150, 0.8)';
+                controlBtn.addEventListener('mouseover', function(){
+                    controlBtn.style.backgroundColor = 'rgba(74, 220, 180, 1)';
+                });
+                controlBtn.addEventListener('mouseout', function(){
+                    controlBtn.style.backgroundColor = 'rgba(74, 180, 150, 0.8)';
+                });
             } else {
                 audio.src = '/music/A Sky Full Of Star.mp3';
                 musicName.innerHTML = 'Music: ColdPlay - A Sky Full Of Star';
                 musicPlayer.style.backgroundColor = 'rgba(50, 80, 100, 0.8)';
+                controlBtn.style.backgroundColor = 'rgba(50, 130, 150, 0.8)';
+                controlBtn.addEventListener('mouseover', function(){
+                    controlBtn.style.backgroundColor = 'rgba(74, 160, 180, 1)';
+                });
+                controlBtn.addEventListener('mouseout', function(){
+                    controlBtn.style.backgroundColor = 'rgba(50, 130, 150, 0.8)';
+                });
             }
+            controlBtn.innerHTML = 'STOP';
         }
     }
 

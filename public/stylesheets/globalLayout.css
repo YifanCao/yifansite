@@ -56,7 +56,50 @@ footer {
 
 .back-button {
 	position: fixed;
-	top: 5%;
-	left: 5%;
+	top: 3%;
+	left: 3%;
 	z-index: 10;
+	-webkit-transition: all .5s;
+	transition: all .5s;
+	border-radius: 100%;
+	-webkit-transform: scale(1.5,1.5);
+	transform: scale(1.5,1.5);
+}
+
+.back-button > span {
+	color: #fff;
+}
+
+.back-button:hover {
+	background-color: rgba(0,0,0,0.3);
+	-webkit-transform: scale(1.8,1.8);
+	transform: scale(1.8,1.8);
+}
+
+.social-navibar {
+	z-index: 4;
+	position: fixed;
+	top: 0px;
+	right: 50px;
+	text-align: right;
+	list-style-type: none;
+}
+
+.social-navibar li {
+	position: relative;
+	display: inline-block;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.social-navibar li > a {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.social-navibar li > a > span {
+	color: #fff;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
 }
