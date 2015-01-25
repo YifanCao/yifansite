@@ -146,7 +146,7 @@ function initPaintingGrid() {
 		gridItem.addCurtain();
 		gridItem.animated = true;
 		animatedCount++;
-		gridItem.changeAnimationDelay(Math.random() * 500 + 500);
+		gridItem.changeAnimationDelay(Math.random() * 500 + 100);
 	}
 
 	init();
