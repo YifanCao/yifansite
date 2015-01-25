@@ -125,7 +125,6 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
 		mainPageAnimation.cancelAnimation();
-		mainPageLightbox.destroy();
 		time.stop();
 	});
 }
