@@ -46,7 +46,7 @@ app.
 factory("changeSocialMediaTheme", function($log) {
 	return function(pageClass) {
 		$log.log(pageClass);
-		var navis = document.querySelectorAll('.social-navibar li');
+		var navis = $('.social-navibar li');
 		var backgroundColor, textColor;
 		if (pageClass == 'mainPage') {
 			backgroundColor = 'rgba(157,188,201,1)';
@@ -100,10 +100,10 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 	$rootScope.animation = '';
 	$scope.pageClass = 'mainPage';
 	changeSocialMediaTheme($scope.pageClass);
-	var controlBtn = document.getElementById('control-button');
-	var audio = document.getElementsByTagName('audio')[0];
+	var controlBtn = $('.control-button');
+	var audio = $('audio')[0];
 	var stop = false;
-	controlBtn.innerHTML = 'STOP';
+	controlBtn.html('STOP');
 	//TO-DO: once we build back-end service, we should get images from the back-end
 	$scope.images = [ { style:"margin-top: -150px; margin-left: -590px;", src:"/images/1.jpg" }, 
 					  { style:"margin-top: -230px; margin-left: -440px;", src:"/images/2.jpg" },
@@ -115,10 +115,10 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 	$scope.audioControl = function() {
 		stop = !stop;
 		if (stop) {
-			controlBtn.innerHTML = 'PLAY';
+			controlBtn.html('PLAY');
 			audio.pause();
 		} else {
-			controlBtn.innerHTML = 'STOP';
+			controlBtn.html('STOP');
 			audio.play();
 		}
 	}

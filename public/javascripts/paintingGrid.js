@@ -41,6 +41,7 @@ function initPaintingGrid() {
 		var view_top = scrollY();
 		var view_bottom = getViewportH() + view_top;
 		h = h || 0;
+		console.log('top:' + elem_top + ', bottom:' + elem_bottom + ', viewTop:' + view_top + ', viewBottom:' + view_bottom);
 		return (elem_top + h * elem_height < view_bottom && elem_bottom - h * elem_height > view_top);
 	}
 	
@@ -57,13 +58,7 @@ function initPaintingGrid() {
 		for (var i = 0; i < gridItems.length; i++) {
 			if (!gridItems[i].animated) {
 				console.log('check element index:' + i);
-				if (inViewport(gridItems[i].elem, 0.5)) {
-					gridItems[i].animated = true;
-					animatedCount++;
-					classie.add(gridItems[i].wrapper, 'animate');
-					gridItems[i].addCurtain();
-					gridItems[i].changeAnimationDelay(Math.random() * 500 + 500);
-				} 
+				checkAndAnimateImg(gridItems[i]);
 			}
 		}
 		isScrolling = false;
@@ -125,17 +120,33 @@ function initPaintingGrid() {
 		for (var i = 0; i < paintingList.length; i++) {
 			var gridItem = new GridItem(paintingList[i]);
 			gridItems.push(gridItem);
-			if (inViewport(gridItem.elem, 0.5)) {
-				classie.add(gridItem.wrapper, 'animate');
-				gridItem.addCurtain();
-				gridItem.animated = true;
-				animatedCount++;
-				gridItem.changeAnimationDelay(Math.random() * 500 + 500);
-			}
+			checkAndAnimateImg(gridItem);
 		}
 		if (animatedCount != gridItems.length) {
 			addListeners();
 		}
+	}
+
+	function checkAndAnimateImg(gridItem) {
+		if (gridItem.img.complete && inViewport(gridItem.elem, 0.5)) {
+				animateImg(gridItem);
+		} else {
+			gridItem.img.onload = (function(item){
+				return function() {
+					if (inViewport(item.elem, 0.5)) {
+						animateImg(item);
+					}
+				};
+			})(gridItem);
+		}
+	}
+
+	function animateImg(gridItem) {
+		classie.add(gridItem.wrapper, 'animate');
+		gridItem.addCurtain();
+		gridItem.animated = true;
+		animatedCount++;
+		gridItem.changeAnimationDelay(Math.random() * 500 + 500);
 	}
 
 	init();
