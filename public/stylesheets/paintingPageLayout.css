@@ -1,11 +1,11 @@
 .paintings-container {
+	position: relative;
 	clear: both;
 	margin: 0 auto;
 	padding: 0;
 	max-width: 1260px;
 	overflow: scroll;
 	height: 100%;
-	overflow: scroll;
 	background-color: rgba(64, 181, 142, 0.5);
 }
 
@@ -17,7 +17,7 @@
 }
 
 .painting-frame {
-	position: relative;
+	position: absolute;
 	margin: 5px;
 	display: inline-block;
 	width: 305px;

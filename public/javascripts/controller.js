@@ -128,7 +128,7 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 		time.stop();
 	});
 }
- 
+
 function ProfileCtrl($rootScope, $scope, $routeParams, $rootScope, $log, $timeout,changeSocialMediaTheme) {
 	$timeout(function() {
 		$rootScope.animation = '';
