@@ -72,6 +72,7 @@ function initPaintingGrid() {
 
 	function resize(){
 		rearrangePaintings();
+		checkPaintingsVisibility();
 	}
 
 	function checkPaintingsVisibility() {
