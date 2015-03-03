@@ -58,14 +58,11 @@ function initPaintingGrid() {
 		var maxCols = Math.ceil(paintingGrid.clientHeight / 315);
 		var paintingList = document.querySelectorAll('.painting-frame');
 		for (var i = 0; i < paintingList.length; i++) {
-			//var offset = getOffset(paintingList[i]);
 			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 5, offsetL = 5;
 			if (row > 0) {
-				//var topOffset = getOffset(paintingList[maxCols * (row - 1) + col]);
 				offsetT += (paintingList[maxCols * (row - 1) + col].offsetTop + paintingList[maxCols * (row - 1) + col].offsetHeight);
 			}
 			if (col > 0) {
-				//var leftOffset = getOffset(paintingList[maxCols * row + col - 1]);
 				offsetL += (paintingList[maxCols * row + col - 1].offsetLeft + paintingList[maxCols * row + col - 1].offsetWidth);
 			}
 			paintingList[i].style.top = offsetT + "px";
@@ -74,10 +71,6 @@ function initPaintingGrid() {
 	}
 
 	function resize(){
-		//width = window.innerWidth;
-        //height = window.innerHeight;
-		//docElem.style.height = window.innerHeight + "px";
-		//docElem.style.width = window.innerWidth + "px";
 		rearrangePaintings();
 	}
 
@@ -149,15 +142,21 @@ function initPaintingGrid() {
 		for (var i = 0; i < paintingList.length; i++) {
 			var gridItem = new GridItem(paintingList[i]);
 			gridItems.push(gridItem);
-			gridItem.img.onload = (function(){
+			if (gridItem.img.complete) {
 				loadCount++;
 				if (loadCount == 16) {
 					rearrangePaintings();
-					for (var i = 0; i < gridItems.length; i++) {
-						checkAndAnimateImg(gridItems[i]);
-					}
+					checkPaintingsVisibility();
 				}
-			})
+			} else {
+				gridItem.img.onload = (function(){
+					loadCount++;
+					if (loadCount == 16) {
+						rearrangePaintings();
+						checkPaintingsVisibility();
+					}
+				});
+			}
 		}
 		if (animatedCount != gridItems.length) {
 			addListeners();
