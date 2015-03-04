@@ -55,10 +55,12 @@ function initPaintingGrid() {
 	}
 
 	function rearrangePaintings() {
-		var maxCols = Math.ceil(paintingGrid.clientHeight / 315);
 		var paintingList = document.querySelectorAll('.painting-frame');
+		var maxCols = 4;
+		var width = Math.floor(paintingGrid.clientWidth / maxCols - 10);
 		for (var i = 0; i < paintingList.length; i++) {
-			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 5, offsetL = 5;
+			paintingList[i].style.width = width + "px";
+			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 0, offsetL = 0;
 			if (row > 0) {
 				offsetT += (paintingList[maxCols * (row - 1) + col].offsetTop + paintingList[maxCols * (row - 1) + col].offsetHeight);
 			}
@@ -84,7 +86,7 @@ function initPaintingGrid() {
 		}
 		isScrolling = false;
 		if (animatedCount == gridItems.length) {
-			removeListners();
+			paintingGrid.removeEventListener( 'scroll', scrollHandler );
 		}
 	}
 
