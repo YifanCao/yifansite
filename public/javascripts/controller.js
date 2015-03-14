@@ -159,22 +159,13 @@ function PaintingsCtrl($rootScope, $scope, $log, $routeParams, $http, changeSoci
 	$scope.pageClass = 'paintingPage';
 	changeSocialMediaTheme($scope.pageClass);
 	$scope.visitorName = $routeParams.visitorname;
-	$scope.paintings = [ { src:"/images/1.jpg" }, 
-						 { src:"/images/2.jpg" },
-						 { src:"/images/3.jpg" },
-						 { src:"/images/4.jpg" },
-						 { src:"/images/5.jpg" },
-						 { src:"/images/6.jpg" },
-						 { src:"/images/7.jpg" },
-						 { src:"/images/8.jpg" },
-						 { src:"/images/9.jpg" },
-						 { src:"/images/10.jpg" },
-						 { src:"/images/11.jpg" },
-						 { src:"/images/12.jpg" },
-						 { src:"/images/13.jpg" },
-						 { src:"/images/14.jpg" },
-						 { src:"/images/15.jpg" },
-						 { src:"/images/16.jpg" } ];
+	$http.get('/paintings').
+		success(function(data, status, headers, config){
+			$scope.paintings = data;
+		}).
+		error(function(data, status, headers, config){
+			$log.log("error when try to get paintings");
+		});
 }
 
 function CodeCtrl($rootScope, $scope, $routeParams, changeSocialMediaTheme) {

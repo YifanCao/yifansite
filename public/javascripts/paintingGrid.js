@@ -57,7 +57,7 @@ function initPaintingGrid() {
 	function rearrangePaintings() {
 		var paintingList = document.querySelectorAll('.painting-frame');
 		var maxCols = 4;
-		var width = Math.floor(paintingGrid.clientWidth / maxCols - 10);
+		var width = Math.floor(paintingGrid.clientWidth / maxCols - 5);
 		for (var i = 0; i < paintingList.length; i++) {
 			paintingList[i].style.width = width + "px";
 			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 0, offsetL = 0;
