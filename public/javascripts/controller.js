@@ -23,6 +23,30 @@ config(function($routeProvider) {
 		when("/code/:visitorname", {templateUrl: "/htmls/code.html", controller: CodeCtrl}).
 		otherwise({templateUrl: "/htmls/mainPage.html", controller: MainCtrl});
 });
+
+//factory for checking the administrator info from backend
+app.
+factory("isAdminName", function($http, $log, $timeout) {
+	var timeoutPromise = null;
+	return function(visitorName) {
+		$timeout.cancel(timeoutPromise);
+		timeoutPromise = $timeout(function() {
+			$http.get("/checkadmin?visitorname=" + visitorName).
+				success(function(data, status, headers, config){
+					if (data == "true") {
+						$log.log("you are administrator!");
+					} else {
+						$log.log("you are not administrator!");
+					}
+				}).
+				error(function(data, status, headers, config){
+					$log.log("error when try to check whether visitor's name is same as admin");
+				});
+		}, 1000);
+
+	};
+});
+
 //timer factory used in main view
 app.
 factory("time", function($timeout) {
@@ -88,11 +112,11 @@ app.directive('onLastRepeat', function($timeout) {
 		}
 	};
 });
-
+//mainPageLightbox service for main view
 app.
 service("mainPageLightbox", MainPageLightbox);
 
-function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme) {
+function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme, isAdminName) {
 	time.start();
 	mainPageAnimation.startAnimation();
 	mainPageLightbox.init();
@@ -112,6 +136,10 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 					  { style:"margin-top: -500px; margin-left: 50px; transform: skew(-50deg) rotate(-150deg)", src:"/images/8.jpg" } ];
 
 
+	$scope.visitorNameChanged = function() {
+		isAdminName($scope.visitorName);
+	};
+
 	$scope.audioControl = function() {
 		stop = !stop;
 		if (stop) {
@@ -121,7 +149,7 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 			controlBtn.html('STOP');
 			audio.play();
 		}
-	}
+	};
 
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
 		mainPageAnimation.cancelAnimation();

@@ -17,7 +17,7 @@ mongoose.connect(DB_CONNECTION_STR, function(err) {
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var paintings = require('./routes/paintings')
+var paintings = require('./routes/paintings');
 
 var app = express();
 
