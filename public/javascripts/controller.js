@@ -92,7 +92,7 @@ app.directive('onLastRepeat', function($timeout) {
 app.
 service("mainPageLightbox", MainPageLightbox);
 
-function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme) {
+function MainCtrl($rootScope, $scope, time, $log, $http, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme) {
 	time.start();
 	mainPageAnimation.startAnimation();
 	mainPageLightbox.init();
@@ -104,14 +104,17 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 	var audio = $('audio')[0];
 	var stop = false;
 	controlBtn.html('STOP');
-	//TO-DO: once we build back-end service, we should get images from the back-end
-	$scope.images = [ { style:"margin-top: -150px; margin-left: -590px;", src:"/images/1.jpg" }, 
-					  { style:"margin-top: -230px; margin-left: -440px;", src:"/images/2.jpg" },
-					  { style:"margin-top: -300px; margin-left: -10px; transform: skew(-50deg) rotate(-70deg)", src:"/images/9.jpg" },
-					  { style:"margin-top: -300px; margin-left: -30px; transform: skew(-50deg) rotate(-110deg)", src:"/images/7.jpg" },
-					  { style:"margin-top: -500px; margin-left: 50px; transform: skew(-50deg) rotate(-150deg)", src:"/images/8.jpg" } ];
-
-
+	$http.get('/api/mainpagepaintings').
+		success(function(data, status, headers, config){
+			$scope.images = [ { style:"margin-top: -150px; margin-left: -590px;", src:data[0].src }, 
+							  { style:"margin-top: -230px; margin-left: -440px;", src:data[1].src },
+							  { style:"margin-top: -300px; margin-left: -10px; transform: skew(-50deg) rotate(-70deg)", src:data[2].src },
+							  { style:"margin-top: -300px; margin-left: -30px; transform: skew(-50deg) rotate(-110deg)", src:data[3].src },
+							  { style:"margin-top: -500px; margin-left: 50px; transform: skew(-50deg) rotate(-150deg)", src:data[4].src } ];
+		}).
+		error(function(data, status, headers, config){
+			$log.log("error when try to get paintings");
+		});
 	$scope.audioControl = function() {
 		stop = !stop;
 		if (stop) {
@@ -159,7 +162,7 @@ function PaintingsCtrl($rootScope, $scope, $log, $routeParams, $http, changeSoci
 	$scope.pageClass = 'paintingPage';
 	changeSocialMediaTheme($scope.pageClass);
 	$scope.visitorName = $routeParams.visitorname;
-	$http.get('/paintings').
+	$http.get('/api/paintings').
 		success(function(data, status, headers, config){
 			$scope.paintings = data;
 		}).
