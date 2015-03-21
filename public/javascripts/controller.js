@@ -31,7 +31,7 @@ factory("isAdminName", function($http, $log, $timeout) {
 	return function(visitorName) {
 		$timeout.cancel(timeoutPromise);
 		timeoutPromise = $timeout(function() {
-			$http.get("/checkadmin?visitorname=" + visitorName).
+			$http.get("/api/checkadmin?visitorname=" + visitorName).
 				success(function(data, status, headers, config){
 					if (data == "true") {
 						$log.log("you are administrator!");
@@ -116,11 +116,8 @@ app.directive('onLastRepeat', function($timeout) {
 app.
 service("mainPageLightbox", MainPageLightbox);
 
-<<<<<<< HEAD
+
 function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme, isAdminName) {
-=======
-function MainCtrl($rootScope, $scope, time, $log, $http, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme) {
->>>>>>> 497bd2966ac6df70d967b68788ef7a268b7e4d87
 	time.start();
 	mainPageAnimation.startAnimation();
 	mainPageLightbox.init();
@@ -132,20 +129,6 @@ function MainCtrl($rootScope, $scope, time, $log, $http, mainPageAnimation, main
 	var audio = $('audio')[0];
 	var stop = false;
 	controlBtn.html('STOP');
-<<<<<<< HEAD
-	//TO-DO: once we build back-end service, we should get images from the back-end
-	$scope.images = [ { style:"margin-top: -150px; margin-left: -590px;", src:"/images/1.jpg" }, 
-					  { style:"margin-top: -230px; margin-left: -440px;", src:"/images/2.jpg" },
-					  { style:"margin-top: -300px; margin-left: -10px; transform: skew(-50deg) rotate(-70deg)", src:"/images/9.jpg" },
-					  { style:"margin-top: -300px; margin-left: -30px; transform: skew(-50deg) rotate(-110deg)", src:"/images/7.jpg" },
-					  { style:"margin-top: -500px; margin-left: 50px; transform: skew(-50deg) rotate(-150deg)", src:"/images/8.jpg" } ];
-
-
-	$scope.visitorNameChanged = function() {
-		isAdminName($scope.visitorName);
-	};
-
-=======
 	$http.get('/api/mainpagepaintings').
 		success(function(data, status, headers, config){
 			$scope.images = [ { style:"margin-top: -150px; margin-left: -590px;", src:data[0].src }, 
@@ -157,7 +140,6 @@ function MainCtrl($rootScope, $scope, time, $log, $http, mainPageAnimation, main
 		error(function(data, status, headers, config){
 			$log.log("error when try to get paintings");
 		});
->>>>>>> 497bd2966ac6df70d967b68788ef7a268b7e4d87
 	$scope.audioControl = function() {
 		stop = !stop;
 		if (stop) {
