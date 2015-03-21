@@ -117,7 +117,7 @@ app.
 service("mainPageLightbox", MainPageLightbox);
 
 
-function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme, isAdminName) {
+function MainCtrl($rootScope, $scope, time, $log, $http, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme, isAdminName) {
 	time.start();
 	mainPageAnimation.startAnimation();
 	mainPageLightbox.init();
@@ -149,6 +149,10 @@ function MainCtrl($rootScope, $scope, time, $log, mainPageAnimation, mainPageLig
 			controlBtn.html('STOP');
 			audio.play();
 		}
+	};
+
+	$scope.visitorNameChanged = function() {
+		isAdminName($scope.visitorName);
 	};
 
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {

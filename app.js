@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var DB_CONNECTION_STR = 'mongodb://yifancao:7712188abc@ds037990.mongolab.com:37990/heroku_app32994337';
-
+//connect to database
 mongoose.connect(DB_CONNECTION_STR, function(err) {
     if (err) {
         console.log('connection error', err);
