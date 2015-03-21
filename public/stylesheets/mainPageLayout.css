@@ -207,7 +207,7 @@ items should be rotated by x, minus (sum of angles - 180)2s */
 	left: 50%;
 	top: 45%;
 	width: 300px;
-	margin-top: 200px;
+	margin-top: 15%;
 	margin-left: -150px;
 	opacity: 0.3;
 	-webkit-transition: all 2s;
