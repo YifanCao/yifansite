@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET /paintings listing. */
+/* GET /api/mainpagepaintings listing. */
 router.get('/', function(req, res, next) {
-	var PaintingSrc = require('../models/PaintingSrc');
+	var PaintingSrc = require('../models/MainpagePaintingSrcs');
 	PaintingSrc.find(function(err, paintings) {
 		if (err) {
 			return next(err);
