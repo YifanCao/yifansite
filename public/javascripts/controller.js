@@ -35,8 +35,10 @@ factory("isAdminName", function($http, $log, $timeout) {
 				success(function(data, status, headers, config){
 					if (data == "true") {
 						$log.log("you are administrator!");
+						$('.visitor-info').append("<p align='center' id='visitor-pwd'><input type='password' ng-model='visitorPWD'></p>");
 					} else {
 						$log.log("you are not administrator!");
+						$('#visitor-pwd').remove();
 					}
 				}).
 				error(function(data, status, headers, config){

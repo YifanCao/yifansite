@@ -270,6 +270,8 @@ items should be rotated by x, minus (sum of angles - 180)2s */
 	position : relative;
 	width : 100%;
 	margin: 5px auto;
+	-webkit-animation: fadeIn-bottom 0.5s both ease-in;
+	animation: fadeIn-bottom 0.5s both ease-in;
 }
 
 .visitor-info input {
