@@ -52,11 +52,11 @@ function MainPageLightbox() {
 			}
 			name.css('opacity',"1");
 		} else {
-			lightbox.css({'width':"200px",
-			  'height':"200px",
-			  'border-radius':"200px",
-			  'margin-left':"-100px",
-			  'margin-top':"-100px"});
+			lightbox.css({'width':"",
+			  'height':"",
+			  'border-radius':"",
+			  'margin-left':"",
+			  'margin-top':""});
 			for (i = 0; i < lists.length; i++) {
 				lists[i].style.opacity = "0";
 				lists[i].style.transform = "skew(50deg)";

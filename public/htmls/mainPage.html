@@ -5,7 +5,7 @@
 *	Description: this is the routed main page of my personal website
  -->
 <div class="themes">
-	<input type="radio" name="theme-selector" value="light" checked>Light
+	<input type="radio" name="theme-selector" value="light">Light
 	<input type="radio" name="theme-selector" value="startrail">Star Trail
 </div>
 
@@ -33,9 +33,9 @@
 
 <footer>
 <div id="music-player" class="music-player">
-	<p><span id="music-name">Music: Aimer - Hakuchuumu</span><span id="control-button" ng-click="audioControl()" class="control-button">STOP</span></p>
+	<p><span id="music-name"></span><span id="control-button" ng-click="audioControl()" class="control-button"></span></p>
 	<audio loop="loop" autoplay="autoplay">  
-		<source src="/music/Aimer-Hakuchuumu.mp3" type="audio/mpeg">
+		<source src="" type="audio/mpeg">
 	</audio>
 </div>
 <p style="padding:5px">{{time.now}}</p>
