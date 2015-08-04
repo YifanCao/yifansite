@@ -3,7 +3,7 @@
 	clear: both;
 	margin: 0 auto;
 	padding: 0;
-	max-width: 70%;
+	max-width: 80%;
 	overflow: scroll;
 	height: 100%;
 	background-color: rgba(64, 181, 142, 0.5);
@@ -18,16 +18,22 @@
 
 .painting-frame {
 	position: absolute;
-	margin: 5px;
+	margin: 8px;
 	display: inline-block;
 	width: 305px;
 	text-align: left;
 	vertical-align: top;
 	overflow: hidden;
+	cursor: pointer;
 }
 
 .painting-wrapper {
 	width: 100%;
+}
+
+.painting-frame:hover .painting-wrapper > img{
+	-webkit-transform: scale(2.0);
+	transform: scale(2.0);
 }
 
 .painting-wrapper > img {
@@ -35,6 +41,8 @@
 	visibility: hidden;
 	width: 100%;
 	display: block;
+	-webkit-transition: all .3s;
+	transition: all .3s;
 }
 
 .curtain {

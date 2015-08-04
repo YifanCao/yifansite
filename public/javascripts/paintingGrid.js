@@ -6,6 +6,7 @@ function initPaintingGrid() {
 		isScrolling = false,
 		animatedCount = 0, loadCount = 0;
 
+	var imgCount = 18;
 	
 	function getOffset(elem) {
 		var offsetTop = 0, offsetLeft = 0;
@@ -57,15 +58,17 @@ function initPaintingGrid() {
 	function rearrangePaintings() {
 		var paintingList = document.querySelectorAll('.painting-frame');
 		var maxCols = 4;
-		var width = Math.floor(paintingGrid.clientWidth / maxCols - 5);
+		var width = Math.floor(paintingGrid.clientWidth / maxCols - 10);
 		for (var i = 0; i < paintingList.length; i++) {
 			paintingList[i].style.width = width + "px";
 			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 0, offsetL = 0;
+			var prevRowPainting = paintingList[maxCols * (row - 1) + col];
+			var prevColPainting = paintingList[maxCols * row + col - 1];
 			if (row > 0) {
-				offsetT += (paintingList[maxCols * (row - 1) + col].offsetTop + paintingList[maxCols * (row - 1) + col].offsetHeight);
+				offsetT += (prevRowPainting.offsetTop + prevRowPainting.offsetHeight);
 			}
 			if (col > 0) {
-				offsetL += (paintingList[maxCols * row + col - 1].offsetLeft + paintingList[maxCols * row + col - 1].offsetWidth);
+				offsetL += (prevColPainting.offsetLeft + prevColPainting.offsetWidth);
 			}
 			paintingList[i].style.top = offsetT + "px";
 			paintingList[i].style.left = offsetL + "px";
@@ -147,14 +150,14 @@ function initPaintingGrid() {
 			gridItems.push(gridItem);
 			if (gridItem.img.complete) {
 				loadCount++;
-				if (loadCount == 16) {
+				if (loadCount == imgCount) {
 					rearrangePaintings();
 					checkPaintingsVisibility();
 				}
 			} else {
 				gridItem.img.onload = (function(){
 					loadCount++;
-					if (loadCount == 16) {
+					if (loadCount == imgCount) {
 						rearrangePaintings();
 						checkPaintingsVisibility();
 					}
