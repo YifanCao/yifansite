@@ -1,5 +1,9 @@
 function initPaintingGrid() {
 
+	/*
+		global variables
+	*/
+
 	var docElem = window.document.documentElement,
 		gridItems,
 		paintingGrid = document.getElementById('paintings-container'),
@@ -8,6 +12,81 @@ function initPaintingGrid() {
 
 	var imgCount = 18;
 	
+	/*
+		class GridItem for wrapping all the paintings in this view
+	*/
+
+	function GridItem(elem) {
+		this.elem = elem;
+		this.wrapper = elem.firstChild;
+		this.img = elem.firstChild.firstChild;
+		this.animated = false;
+		if (this.img.complete) {
+			loadCount++;
+			if (loadCount == imgCount) {
+				rearrangePaintings();
+				checkPaintingsVisibility();
+			}
+		} else {
+			this.img.onload = (function(){
+				loadCount++;
+				if (loadCount == imgCount) {
+					rearrangePaintings();
+					checkPaintingsVisibility();
+				}
+			});
+		}
+		/*
+			when hover, we want the image to be zoomed out 
+			and show the part of it according to the position
+			of the mouse.
+		*/
+		$(this.elem).mousemove(function(event){
+			var left = Math.floor((event.pageX - ($(this).offset().left + $(this).outerWidth()/2)) * 2);
+			var top = Math.floor((event.pageY - ($(this).offset().top + $(this).outerHeight()/2)) * 2);
+			$(this.firstChild.firstChild).css({"left":left,"top":top});
+		});
+		$(this.elem).mouseover(function(){
+			$(this.firstChild.firstChild).css({"-webkit-transform":"scale(2.0)","transform":"scale(2.0)"});
+		})
+		$(this.elem).mouseout(function(){
+			$(this.firstChild.firstChild).css({"-webkit-transform":"","transform":"","left":"","top":""});
+		});
+	}
+
+	GridItem.prototype.addCurtain = function() {
+		this.curtain = document.createElement('div');
+		this.curtain.className = 'curtain';
+		var image = new Image();
+		image.src = this.img.src;
+		var rgb = new ColorFinder( function favorHue(r,g,b) {
+			// exclude white
+			//if (r>245 && g>245 && b>245) return 0;
+			return (Math.abs(r-g)*Math.abs(r-g) + Math.abs(r-b)*Math.abs(r-b) + Math.abs(g-b)*Math.abs(g-b))/65535*50+1;
+		} ).getMostProminentColor( image );
+		if( rgb.r && rgb.g && rgb.b ) {
+			this.curtain.style.background = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
+		}
+		this.wrapper.appendChild(this.curtain);
+	}
+
+	GridItem.prototype.changeAnimationDelay = function(time) {
+		if( this.curtain ) {
+			this.curtain.style.WebkitAnimationDelay = time + 'ms';
+			this.curtain.style.animationDelay = time + 'ms';
+		}
+		if( this.img ) {
+			this.img.style.WebkitAnimationDelay = time + 'ms';
+			this.img.style.animationDelay = time + 'ms';
+		}
+		if( this.desc ) {
+			this.desc.style.WebkitAnimationDelay = time + 'ms';
+			this.desc.style.animationDelay = time+ 'ms';
+		}
+	}
+
+	// ---------------------------- end of GridItem -----------------------------------------
+
 	function getOffset(elem) {
 		var offsetTop = 0, offsetLeft = 0;
 		do {
@@ -103,67 +182,14 @@ function initPaintingGrid() {
 		window.onresize = null;
 	}
 
-
-	function GridItem(elem) {
-		this.elem = elem;
-		this.wrapper = elem.firstChild;
-		this.img = elem.firstChild.firstChild;
-		this.animated = false;
-	}
-
-	GridItem.prototype.addCurtain = function() {
-		this.curtain = document.createElement('div');
-		this.curtain.className = 'curtain';
-		var image = new Image();
-		image.src = this.img.src;
-		var rgb = new ColorFinder( function favorHue(r,g,b) {
-			// exclude white
-			//if (r>245 && g>245 && b>245) return 0;
-			return (Math.abs(r-g)*Math.abs(r-g) + Math.abs(r-b)*Math.abs(r-b) + Math.abs(g-b)*Math.abs(g-b))/65535*50+1;
-		} ).getMostProminentColor( image );
-		if( rgb.r && rgb.g && rgb.b ) {
-			this.curtain.style.background = 'rgb('+rgb.r+','+rgb.g+','+rgb.b+')';
-		}
-		this.wrapper.appendChild(this.curtain);
-	}
-
-	GridItem.prototype.changeAnimationDelay = function(time) {
-		if( this.curtain ) {
-			this.curtain.style.WebkitAnimationDelay = time + 'ms';
-			this.curtain.style.animationDelay = time + 'ms';
-		}
-		if( this.img ) {
-			this.img.style.WebkitAnimationDelay = time + 'ms';
-			this.img.style.animationDelay = time + 'ms';
-		}
-		if( this.desc ) {
-			this.desc.style.WebkitAnimationDelay = time + 'ms';
-			this.desc.style.animationDelay = time+ 'ms';
-		}
-	}
-
 	function init() {
 		var paintingList = document.querySelectorAll('.painting-frame');
 		gridItems = [];
 		for (var i = 0; i < paintingList.length; i++) {
 			var gridItem = new GridItem(paintingList[i]);
 			gridItems.push(gridItem);
-			if (gridItem.img.complete) {
-				loadCount++;
-				if (loadCount == imgCount) {
-					rearrangePaintings();
-					checkPaintingsVisibility();
-				}
-			} else {
-				gridItem.img.onload = (function(){
-					loadCount++;
-					if (loadCount == imgCount) {
-						rearrangePaintings();
-						checkPaintingsVisibility();
-					}
-				});
-			}
 		}
+		// not all paintings revealed, add listener for animation when paintings were scrolled into current view
 		if (animatedCount != gridItems.length) {
 			addListeners();
 		}
