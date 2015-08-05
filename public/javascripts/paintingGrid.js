@@ -42,8 +42,15 @@ function initPaintingGrid() {
 			of the mouse.
 		*/
 		$(this.elem).mousemove(function(event){
+			var padding = parseInt($(this).css('padding').substring(0,1))
 			var left = (event.pageX - ($(this).offset().left + $(this).outerWidth()/2)) * 2;
 			var top = (event.pageY - ($(this).offset().top + $(this).outerHeight()/2)) * 2;
+			left = Math.min(left, $(this.firstChild.firstChild).outerWidth() - $(this).outerWidth()/2 + padding);
+			left = Math.max(left, -($(this.firstChild.firstChild).outerWidth() - $(this).outerWidth()/2 + padding));
+			top = Math.min(top, $(this.firstChild.firstChild).outerHeight() - $(this).outerHeight()/2 + padding);
+			top = Math.max(top, -($(this.firstChild.firstChild).outerHeight() - $(this).outerHeight()/2 + padding));
+			//console.log("image's left upper limit: " + ($(this).offset().left - 16) + " lower limit: " + ($(this).offset().left + $(this).outerWidth() - $(this.firstChild.firstChild).outerWidth()*2 - 40));
+			console.log("frame's top: " + $(this).offset().top + " left: " + $(this).offset().left);
 			console.log('left: ' + left + '; top: ' + top);
 			$(this.firstChild.firstChild).css({"left":left,"top":top});
 		});
