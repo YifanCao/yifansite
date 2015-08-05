@@ -42,7 +42,7 @@ function initPaintingGrid() {
 			of the mouse.
 		*/
 		$(this.elem).mousemove(function(event){
-			var padding = parseInt($(this).css('padding').substring(0,1))
+			var padding = parseInt($(this).css('padding').substring(0,$(this).css('padding').indexOf('px')));
 			var left = (event.pageX - ($(this).offset().left + $(this).outerWidth()/2)) * 2;
 			var top = (event.pageY - ($(this).offset().top + $(this).outerHeight()/2)) * 2;
 			left = Math.min(left, $(this.firstChild.firstChild).outerWidth() - $(this).outerWidth()/2 + padding);
