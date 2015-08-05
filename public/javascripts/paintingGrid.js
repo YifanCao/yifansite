@@ -42,8 +42,9 @@ function initPaintingGrid() {
 			of the mouse.
 		*/
 		$(this.elem).mousemove(function(event){
-			var left = Math.floor((event.pageX - ($(this).offset().left + $(this).outerWidth()/2)) * 2);
-			var top = Math.floor((event.pageY - ($(this).offset().top + $(this).outerHeight()/2)) * 2);
+			var left = (event.pageX - ($(this).offset().left + $(this).outerWidth()/2)) * 2;
+			var top = (event.pageY - ($(this).offset().top + $(this).outerHeight()/2)) * 2;
+			console.log('left: ' + left + '; top: ' + top);
 			$(this.firstChild.firstChild).css({"left":left,"top":top});
 		});
 		$(this.elem).mouseover(function(){
@@ -137,7 +138,7 @@ function initPaintingGrid() {
 	function rearrangePaintings() {
 		var paintingList = document.querySelectorAll('.painting-frame');
 		var maxCols = 4;
-		var width = Math.floor(paintingGrid.clientWidth / maxCols - 10);
+		var width = Math.floor(paintingGrid.clientWidth / maxCols - 26);
 		for (var i = 0; i < paintingList.length; i++) {
 			paintingList[i].style.width = width + "px";
 			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 0, offsetL = 0;
