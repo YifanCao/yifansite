@@ -31,6 +31,7 @@ function initPaintingGrid() {
 		} else {
 			this.img.onload = (function(){
 				loadCount++;
+				console.log("img load count:" + loadCount);
 				if (loadCount == imgCount) {
 					rearrangePaintings();
 					checkPaintingsVisibility();
@@ -162,6 +163,9 @@ function initPaintingGrid() {
 			paintingList[i].style.top = offsetT + "px";
 			paintingList[i].style.left = offsetL + "px";
 		}
+
+		//TODO: this is not the good place to set the grid's height, as the page div may still not be stretched by the increasing images
+		paintingPage = document.getElementById('page');
 		console.log("scrollHeight:" + paintingPage.scrollHeight);
 		$(paintingGrid).height(paintingPage.scrollHeight);
 		console.log("offsetheight:" + paintingGrid.offsetHeight);
