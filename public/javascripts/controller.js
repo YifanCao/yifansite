@@ -110,7 +110,7 @@ service("mainPageAnimation", MainPageAnimation);
 app.directive('onLastRepeat', function($timeout) {
 	return function(scope, element, attrs) {
 		if (scope.$last) {
-			$timeout(initPaintingGrid, 1);
+			$timeout(initPaintingGrid, 500);
 		}
 	};
 });

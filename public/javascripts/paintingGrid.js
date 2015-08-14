@@ -51,9 +51,6 @@ function initPaintingGrid() {
 			left = Math.max(left, -($(this.firstChild.firstChild).outerWidth() - $(this).outerWidth()/2 + padding));
 			top = Math.min(top, $(this.firstChild.firstChild).outerHeight() - $(this).outerHeight()/2 + padding);
 			top = Math.max(top, -($(this.firstChild.firstChild).outerHeight() - $(this).outerHeight()/2 + padding));
-			//console.log("image's left upper limit: " + ($(this).offset().left - 16) + " lower limit: " + ($(this).offset().left + $(this).outerWidth() - $(this.firstChild.firstChild).outerWidth()*2 - 40));
-			console.log("frame's top: " + $(this).offset().top + " left: " + $(this).offset().left);
-			console.log('left: ' + left + '; top: ' + top);
 			$(this.firstChild.firstChild).css({"left":left,"top":top});
 		});
 		$(this.elem).mouseover(function(){
@@ -136,19 +133,11 @@ function initPaintingGrid() {
 		return (elem_top + h * elem_height < view_bottom && elem_bottom - h * elem_height > view_top);
 	}
 	
-
-	function scrollHandler() {
-		console.log("scrolled!");
-		if (!isScrolling) {
-			isScrolling = true;
-			setTimeout(checkPaintingsVisibility, 200);
-		} 
-	}
-
 	function rearrangePaintings() {
 		var paintingList = document.querySelectorAll('.painting-frame');
 		var maxCols = 4;
 		var width = Math.floor(paintingGrid.clientWidth / maxCols - 26);
+		var pageHeight = 0;
 		for (var i = 0; i < paintingList.length; i++) {
 			paintingList[i].style.width = width + "px";
 			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 0, offsetL = 0;
@@ -162,13 +151,13 @@ function initPaintingGrid() {
 			}
 			paintingList[i].style.top = offsetT + "px";
 			paintingList[i].style.left = offsetL + "px";
+			pageHeight = Math.max(pageHeight, offsetT + $(paintingList[i]).outerHeight(true));
 		}
 
 		//TODO: this is not the good place to set the grid's height, as the page div may still not be stretched by the increasing images
-		paintingPage = document.getElementById('page');
-		console.log("scrollHeight:" + paintingPage.scrollHeight);
-		$(paintingGrid).height(paintingPage.scrollHeight);
-		console.log("offsetheight:" + paintingGrid.offsetHeight);
+		console.log("final page height:" + pageHeight);
+		$(paintingGrid).height(pageHeight);
+		console.log("offsetheight of page container:" + paintingGrid.offsetHeight);
 	}
 
 	function resize(){
@@ -185,18 +174,21 @@ function initPaintingGrid() {
 		}
 		isScrolling = false;
 		if (animatedCount == gridItems.length) {
-			paintingPage.removeEventListener( 'scroll', scrollHandler );
+			console.log('removing scroll listener');
+			$(paintingPage).scroll(null);
 		}
 	}
 
 	function addListeners() {
-		paintingPage.addEventListener( 'scroll', scrollHandler );
-		window.onresize = resize;
-	}
-
-	function removeListners() {
-		paintingPage.removeEventListener( 'scroll', scrollHandler );
-		window.onresize = null;
+		console.log('adding scroll listener');
+		$(paintingPage).scroll(function(){
+			console.log("scrolled!");
+			if (!isScrolling) {
+				isScrolling = true;
+				setTimeout(checkPaintingsVisibility, 200);
+			}
+		});
+		$(window).resize(resize);
 	}
 
 	function init() {
