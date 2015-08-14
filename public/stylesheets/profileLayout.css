@@ -2,13 +2,13 @@ header {
 	background-color: rgba(255, 160, 103, 1);
 	position: absolute;
 	top: 0;
-	padding: 20px 300px;
+	padding: 60px 300px 20px;
 	border-bottom: 10px solid #FCDBC2;
 	left: 0;
 	right: 0;
 	margin: 0 auto;
 	height: 17vh;
-	box-shadow: 0 10px rgba(220, 140, 103, 1);
+	box-shadow: 0 10px 50px rgba(0,0,0, 0.5);
 	z-index: 2;
 	text-transform:uppercase;
 	font-weight: 700;
@@ -16,7 +16,7 @@ header {
 
 .content {
 	position: absolute;
-	background-color: rgba(255, 170, 100, .8);
+	background-color: rgba(255, 170, 100, .6);
 	padding: 40px;
 	border: 5px solid #FCDBC2;
 	box-shadow: 0 10px 10px rgba(0,0,0, 0.5);
@@ -36,6 +36,12 @@ header {
 	animation: fadeIn-bottom 0.5s both ease-in;
 	-webkit-animation-delay: 1.5s;
 	animation-delay: 1.5s;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.content:hover {
+	background-color: rgba(255, 170, 100, 1);
 }
 
 .content p {
@@ -184,6 +190,7 @@ header {
 	text-align: center;
 	border-radius: 100%;
 	border: 5px solid #FCDBC2;
+	box-shadow: 0 10px 20px rgba(0,0,0, 0.5);
 	z-index: 2;
 	position: absolute;
 	background-color: rgba(255, 160, 103, 1);
@@ -220,6 +227,7 @@ header {
 	height: 100px;
 	width: 100px;
 	margin-top: 25px;
+	box-shadow: 0 10px 10px rgba(0,0,0, 0.8);
 	background-color: rgba(255, 200, 130, 1);
 }
 
