@@ -7,6 +7,7 @@ function initPaintingGrid() {
 	var docElem = window.document.documentElement,
 		gridItems,
 		paintingGrid = document.getElementById('paintings-container'),
+		paintingPage = document.getElementById('page'),
 		isScrolling = false,
 		animatedCount = 0, loadCount = 0;
 
@@ -119,7 +120,8 @@ function initPaintingGrid() {
 	}
 
 	function scrollY() {
-		return paintingGrid.scrollTop;
+		console.log(paintingPage.scrollTop);
+		return paintingPage.scrollTop;
 	}
 
 	function inViewport(elem, h) {
@@ -160,6 +162,9 @@ function initPaintingGrid() {
 			paintingList[i].style.top = offsetT + "px";
 			paintingList[i].style.left = offsetL + "px";
 		}
+		console.log("scrollHeight:" + paintingPage.scrollHeight);
+		$(paintingGrid).height(paintingPage.scrollHeight);
+		console.log("offsetheight:" + paintingGrid.offsetHeight);
 	}
 
 	function resize(){
@@ -176,17 +181,17 @@ function initPaintingGrid() {
 		}
 		isScrolling = false;
 		if (animatedCount == gridItems.length) {
-			paintingGrid.removeEventListener( 'scroll', scrollHandler );
+			paintingPage.removeEventListener( 'scroll', scrollHandler );
 		}
 	}
 
 	function addListeners() {
-		paintingGrid.addEventListener( 'scroll', scrollHandler );
+		paintingPage.addEventListener( 'scroll', scrollHandler );
 		window.onresize = resize;
 	}
 
 	function removeListners() {
-		paintingGrid.removeEventListener( 'scroll', scrollHandler );
+		paintingPage.removeEventListener( 'scroll', scrollHandler );
 		window.onresize = null;
 	}
 

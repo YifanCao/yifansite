@@ -4,7 +4,6 @@
 	margin: 0 auto;
 	padding: 0;
 	max-width: 80%;
-	overflow: scroll;
 	height: 100%;
 	background-color: rgba(64, 181, 142, 0.6);
 }
@@ -27,6 +26,16 @@
 	overflow: hidden;
 	cursor: pointer;
 	background-color: rgba(64, 181, 142, 0.9);
+	box-shadow: 0 0 80px 20px rgba(0, 0, 0, 0);
+	-webkit-transition: box-shadow .3s, z-index .3s, -webkit-transform .3s;
+	transition: box-shadow .3s, z-index .3s, transform .3s;
+}
+
+.painting-frame:hover {
+	box-shadow: 0 30px 80px 10px rgba(0, 0, 0, 0.9);
+	z-index: 9999;
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .painting-wrapper {
@@ -39,6 +48,26 @@
 	transform: scale(2.0);
 }
 */
+
+.painting-frame .painting-wrapper::before {
+	z-index: 999;
+	position: absolute;
+	content:'';
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border: 0 solid rgba(64, 181, 142, 0.9);
+	-webkit-transition: all .3s;
+	transition: all .3s;
+}
+
+.painting-frame:hover .painting-wrapper::before {
+	box-shadow: inset 0 0 80px 20px rgba(0, 0, 0, 0.7);
+	border: 5px solid rgba(64, 181, 142, 1);
+	width: calc(100% - 10px);
+	height: calc(100% - 10px);
+}
 
 .painting-wrapper > img {
 	position: relative;
