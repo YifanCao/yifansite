@@ -113,24 +113,6 @@ function MainPageAnimation() {
             ctx.clearRect(0,0,width,height);
         //star trail
         if (circles[0].state == 1) {
-            //var grd = ctx.createRadialGradient(width/2,height/2,width/50,width/2,height/2,height);
-            //    background: -webkit-radial-gradient(circle, rgba(4,25,34,1), rgba(20,78,100,1), rgba(43, 150, 166, 1), rgba(20,78,100,1), rgba(4,25,34,1)); /* Standard syntax (must be last) */
-            //     background: -o-radial-gradient(circle, rgba(4,25,34,1), rgba(20,78,100,1), rgba(43, 150, 166, 1), rgba(20,78,100,1), rgba(4,25,34,1)); /* Standard syntax (must be last) */
-            //     background: -moz-radial-gradient(circle, rgba(4,25,34,1), rgba(20,78,100,1), rgba(43, 150, 166, 1), rgba(20,78,100,1), rgba(4,25,34,1)); /* Standard syntax (must be last) */
-            //     background: radial-gradient(circle, rgba(4,25,34,1), rgba(20,78,100,1), rgba(43, 150, 166, 1), rgba(20,78,100,1), rgba(4,25,34,1)); /* Standard syntax (must be last) */
-            /*
-            grd.addColorStop(0,'rgba(4,25,34,0.08)');
-            grd.addColorStop(0.25, 'rgba(20,78,100,0.08)');
-            grd.addColorStop(0.5, 'rgba(43,150,166,0.08)');
-            grd.addColorStop(0.65, 'rgba(20,78,100,0.08)');
-            grd.addColorStop(0.9, 'rgba(4,25,34,0.08)');
-            grd.addColorStop(1, 'rgba(4,25,34,0.08)');
-            
-            //grd.addColorStop(0, 'transparent');
-            //grd.addColorStop(1, 'transparent');
-            // Fill with gradient
-            ctx.fillStyle= grd;
-            */
             ctx.fillStyle = 'rgba(0,0,0,0.05)';
             ctx.fillRect(0, 0, width, height);
             

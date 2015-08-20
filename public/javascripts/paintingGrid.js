@@ -181,7 +181,7 @@ function initPaintingGrid() {
 
 	function addListeners() {
 		console.log('adding scroll listener');
-		$(paintingPage).scroll(function(){
+		$('#page').scroll(function(){
 			console.log("scrolled!");
 			if (!isScrolling) {
 				isScrolling = true;
