@@ -110,7 +110,9 @@ service("mainPageAnimation", MainPageAnimation);
 app.directive('onLastRepeat', function($timeout) {
 	return function(scope, element, attrs) {
 		if (scope.$last) {
-			$timeout(initPaintingGrid, 500);
+			$timeout(function() {
+				scope.$emit('onRepeatLast', element, attrs);
+			}, 1);
 		}
 	};
 });
@@ -200,6 +202,9 @@ function PaintingsCtrl($rootScope, $scope, $log, $routeParams, $http, changeSoci
 		error(function(data, status, headers, config){
 			$log.log("error when try to get paintings");
 		});
+	$scope.$on('onRepeatLast', function(scope, element, attrs){
+		initPaintingGrid();
+	});
 }
 
 function CodeCtrl($rootScope, $scope, $routeParams, changeSocialMediaTheme) {

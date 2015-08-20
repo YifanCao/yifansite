@@ -7,7 +7,6 @@ function initPaintingGrid() {
 	var docElem = window.document.documentElement,
 		gridItems,
 		paintingGrid = document.getElementById('paintings-container'),
-		paintingPage = document.getElementById('page'),
 		isScrolling = false,
 		animatedCount = 0, loadCount = 0;
 
@@ -118,8 +117,8 @@ function initPaintingGrid() {
 	}
 
 	function scrollY() {
-		console.log(paintingPage.scrollTop);
-		return paintingPage.scrollTop;
+		console.log($('.page.paintingPage').scrollTop());
+		return $('.page.paintingPage').scrollTop();
 	}
 
 	function inViewport(elem, h) {
@@ -175,13 +174,13 @@ function initPaintingGrid() {
 		isScrolling = false;
 		if (animatedCount == gridItems.length) {
 			console.log('removing scroll listener');
-			$(paintingPage).scroll(null);
+			$('.page.paintingPage').scroll(null);
 		}
 	}
 
 	function addListeners() {
 		console.log('adding scroll listener');
-		$('#page').scroll(function(){
+		$('.page.paintingPage').scroll(function(){
 			console.log("scrolled!");
 			if (!isScrolling) {
 				isScrolling = true;
