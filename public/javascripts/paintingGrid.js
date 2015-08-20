@@ -8,9 +8,8 @@ function initPaintingGrid() {
 		gridItems,
 		paintingGrid = document.getElementById('paintings-container'),
 		isScrolling = false,
-		animatedCount = 0, loadCount = 0;
-
-	var imgCount = 18;
+		paintingList = document.querySelectorAll('.painting-frame'),
+		animatedCount = 0, loadCount = 0, imgCount = paintingList.length;
 	
 	/*
 		class GridItem for wrapping all the paintings in this view
@@ -133,7 +132,6 @@ function initPaintingGrid() {
 	}
 	
 	function rearrangePaintings() {
-		var paintingList = document.querySelectorAll('.painting-frame');
 		var maxCols = 4;
 		var width = Math.floor(paintingGrid.clientWidth / maxCols - 26);
 		var pageHeight = 0;
@@ -191,7 +189,6 @@ function initPaintingGrid() {
 	}
 
 	function init() {
-		var paintingList = document.querySelectorAll('.painting-frame');
 		gridItems = [];
 		for (var i = 0; i < paintingList.length; i++) {
 			var gridItem = new GridItem(paintingList[i]);
