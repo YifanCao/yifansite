@@ -7,17 +7,19 @@ function MainPageAnimation() {
     }
 
     this.cancelAnimation = function() {
-        window.removeEventListener('resize', resize);
-        for (var i = 0; i < themeSelector.length; i++) {
-            themeSelector[i].onclick = null;
-        }
         cancelAnimationFrame(animateID);
+        window.removeEventListener('resize');
+        for (var i = 0; i < $("li.theme-selector").length; i++) {
+            $("li.theme-selector")[i].onclick = null;
+            if ( currThemeIdx == i ) {
+                $($("li.theme-selector")[i]).removeClass('active');
+            }
+        }
     }
 
     //private members
     var width, height, largeHeader, canvas, ctx, circles, animateID = null, currThemeIdx = 0;
 
-    var themeSelector = $("li.theme-selector");
     var themeOverlay = $("#theme-overlay");
     var body = document.body;
 
@@ -47,8 +49,9 @@ function MainPageAnimation() {
     // Event handling
     function addListeners() {
         window.addEventListener('resize', resize);
-        for (var i = 0; i < themeSelector.length; i++) {
-            themeSelector[i].onclick = themeSelectorHandlerWrapper(i);
+        for (var i = 0; i < $("li.theme-selector").length; i++) {
+            console.log("adding event handler for " + $("li.theme-selector")[i]);
+            $("li.theme-selector")[i].onclick = themeSelectorHandlerWrapper(i);
             if ( currThemeIdx == i ) {
                 setTheme(i);
             }
@@ -69,47 +72,47 @@ function MainPageAnimation() {
         };
     }
 
-    function setTheme(idx) {
-        if (currThemeIdx == idx && $(themeSelector[currThemeIdx]).hasClass("active")){
+    function setTheme(idx) {        
+        if (idx == currThemeIdx && $($("li.theme-selector")[currThemeIdx]).hasClass('active')){
             return;
         }
-        console.log("execute setTheme: idx=" + idx + " theme=" + $(themeSelector[idx]));
-        $(themeSelector[currThemeIdx]).removeClass("active");
-        $(themeSelector[idx]).addClass("active");
+        console.log("execute setTheme: idx=" + idx + " theme=" + $($("li.theme-selector")[idx]));
+        $($("li.theme-selector")[currThemeIdx]).removeClass("active");
+        $($("li.theme-selector")[idx]).addClass("active");
         currThemeIdx = idx;
         for(var i in circles) {
             circles[i].state = currThemeIdx;
         }
-        var audio = document.getElementsByTagName('audio')[0];
-        var musicPlayer = document.getElementById('music-player');
-        var musicName = document.getElementById('music-name');
-        var controlBtn = document.getElementById('control-button');
+        var audio = $('audio')[0];
+        var musicPlayer = $('#music-player');
+        var musicName = $('#music-name');
+        var controlBtn = $('#control-button');
         //light
         if (currThemeIdx == 0) {
             audio.src = '/music/Aimer-Hakuchuumu.mp3';
-            musicName.innerHTML = 'Music: Aimer - Hakuchuumu';
-            musicPlayer.style.backgroundColor = 'rgba(74, 129, 133, 0.8)';
-            controlBtn.style.backgroundColor = 'rgba(74, 180, 150, 0.8)';
-            controlBtn.addEventListener('mouseover', function(){
-                controlBtn.style.backgroundColor = 'rgba(74, 220, 180, 1)';
+            musicName.text('Music: Aimer - Hakuchuumu');
+            musicPlayer.css({'background-color':'rgba(74, 129, 133, 0.8)'});
+            controlBtn.css({'background-color':'rgba(74, 180, 150, 0.8)'});
+            controlBtn.on('mouseover', function(){
+                controlBtn.css({'background-color':'rgba(74, 220, 180, 1)'});
             });
-            controlBtn.addEventListener('mouseout', function(){
-                controlBtn.style.backgroundColor = 'rgba(74, 180, 150, 0.8)';
+            controlBtn.on('mouseout', function(){
+                controlBtn.css({'background-color':'rgba(74, 180, 150, 0.8)'});
             });
         //star trail
         } else {
             audio.src = '/music/A Sky Full Of Star.mp3';
-            musicName.innerHTML = 'Music: ColdPlay - A Sky Full Of Star';
-            musicPlayer.style.backgroundColor = 'rgba(50, 80, 100, 0.8)';
-            controlBtn.style.backgroundColor = 'rgba(50, 130, 150, 0.8)';
-            controlBtn.addEventListener('mouseover', function(){
-                controlBtn.style.backgroundColor = 'rgba(74, 160, 180, 1)';
+            musicName.text('Music: ColdPlay - A Sky Full Of Star');
+            musicPlayer.css({'background-color':'rgba(50, 80, 100, 0.8)'});
+            controlBtn.css({'background-color':'rgba(50, 130, 150, 0.8)'});
+            controlBtn.on('mouseover', function(){
+                controlBtn.css({'background-color':'rgba(74, 160, 180, 1)'});
             });
-            controlBtn.addEventListener('mouseout', function(){
-                controlBtn.style.backgroundColor = 'rgba(50, 130, 150, 0.8)';
+            controlBtn.on('mouseout', function(){
+                controlBtn.css({'background-color':'rgba(50, 130, 150, 0.8)'});
             });
         }
-        controlBtn.innerHTML = 'STOP';      
+        controlBtn.text('STOP');      
     }
 
     function animate() {
@@ -136,7 +139,6 @@ function MainPageAnimation() {
         (function() {
             _this.pos = {};
             init();
-            console.log(_this);
         })();
 
         function init() {

@@ -123,8 +123,6 @@ service("mainPageLightbox", MainPageLightbox);
 
 function MainCtrl($rootScope, $scope, time, $log, $http, mainPageAnimation, mainPageLightbox,changeSocialMediaTheme, isAdminName) {
 	time.start();
-	mainPageAnimation.startAnimation();
-	mainPageLightbox.init();
 	$scope.time = time;
 	$rootScope.animation = '';
 	$scope.pageClass = 'mainPage';
@@ -158,6 +156,8 @@ function MainCtrl($rootScope, $scope, time, $log, $http, mainPageAnimation, main
 	$scope.visitorNameChanged = function() {
 		isAdminName($scope.visitorName);
 	};
+	mainPageAnimation.startAnimation();
+	mainPageLightbox.init();
 
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
 		mainPageAnimation.cancelAnimation();
