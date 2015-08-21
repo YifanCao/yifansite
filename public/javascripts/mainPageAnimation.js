@@ -17,8 +17,8 @@ function MainPageAnimation() {
     //private members
     var width, height, largeHeader, canvas, ctx, circles, animateID = null, currThemeIdx = 0;
 
-    var themeSelector = document.getElementsByName("theme-selector");
-    var themeOverlay = document.getElementById("theme-overlay");
+    var themeSelector = $("li.theme-selector");
+    var themeOverlay = $("#theme-overlay");
     var body = document.body;
 
     function initAnimation() {
@@ -48,9 +48,9 @@ function MainPageAnimation() {
     function addListeners() {
         window.addEventListener('resize', resize);
         for (var i = 0; i < themeSelector.length; i++) {
-            themeSelector[i].onclick = themeSelectorHandlerWrapper(themeSelector[i], i);
+            themeSelector[i].onclick = themeSelectorHandlerWrapper(i);
             if ( currThemeIdx == i ) {
-                setThemeMusic(themeSelector[i], i);
+                setTheme(i);
             }
         }
     }
@@ -63,14 +63,19 @@ function MainPageAnimation() {
         canvas.height = height;
     }
 
-    function themeSelectorHandlerWrapper(theme, idx) {
+    function themeSelectorHandlerWrapper(idx) {
         return function() {
-            setThemeMusic(theme, idx);       
+            setTheme(idx);       
         };
     }
 
-    function setThemeMusic(theme, idx) {
-        console.log("execute setThemeMusic: idx=" + idx + " theme=" + theme);
+    function setTheme(idx) {
+        if (currThemeIdx == idx && $(themeSelector[currThemeIdx]).hasClass("active")){
+            return;
+        }
+        console.log("execute setTheme: idx=" + idx + " theme=" + $(themeSelector[idx]));
+        $(themeSelector[currThemeIdx]).removeClass("active");
+        $(themeSelector[idx]).addClass("active");
         currThemeIdx = idx;
         for(var i in circles) {
             circles[i].state = currThemeIdx;
