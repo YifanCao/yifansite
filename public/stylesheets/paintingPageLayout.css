@@ -5,7 +5,7 @@
 	padding: 0;
 	max-width: 80%;
 	height: 100%;
-	background-color: rgba(64, 181, 142, 0.6);
+	background-color: rgba(100, 181, 142, 0.6);
 }
 
 .paintings-container ul {
@@ -25,7 +25,7 @@
 	vertical-align: top;
 	overflow: hidden;
 	cursor: pointer;
-	background-color: rgba(64, 181, 142, 0.9);
+	background-color: rgba(80, 150, 140, 0.9);
 	box-shadow: 0 0 80px 20px rgba(0, 0, 0, 0);
 	-webkit-transition: box-shadow .3s, z-index .3s, -webkit-transform .3s;
 	transition: box-shadow .3s, z-index .3s, transform .3s;

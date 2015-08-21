@@ -42,9 +42,9 @@ function initPaintingGrid() {
 			of the mouse.
 		*/
 		$(this.elem).mousemove(function(event){
-			var padding = parseInt($(this).css('padding').substring(0,$(this).css('padding').indexOf('px')));
-			var left = (event.pageX - ($(this).offset().left + $(this).outerWidth()/2)) * 2;
-			var top = (event.pageY - ($(this).offset().top + $(this).outerHeight()/2)) * 2;
+			var padding = parseInt($(this).css('padding').substring(0,$(this).css('padding').indexOf('px'))),
+				left = (event.pageX - ($(this).offset().left + $(this).outerWidth()/2)) * 2,
+				top = (event.pageY - ($(this).offset().top + $(this).outerHeight()/2)) * 2;
 			left = Math.min(left, $(this.firstChild.firstChild).outerWidth() - $(this).outerWidth()/2 + padding);
 			left = Math.max(left, -($(this.firstChild.firstChild).outerWidth() - $(this).outerWidth()/2 + padding));
 			top = Math.min(top, $(this.firstChild.firstChild).outerHeight() - $(this).outerHeight()/2 + padding);
@@ -121,25 +121,25 @@ function initPaintingGrid() {
 	}
 
 	function inViewport(elem, h) {
-		var elem_height = elem.offsetHeight;
-		var elem_top = getOffset(elem).top,
-			elem_bottom = elem_top + elem_height;
-		var view_top = scrollY();
-		var view_bottom = getViewportH() + view_top;
+		var elem_height = elem.offsetHeight,
+			elem_top = getOffset(elem).top,
+			elem_bottom = elem_top + elem_height,
+			view_top = scrollY(),
+			view_bottom = getViewportH() + view_top;
 		h = h || 0;
 		console.log('top:' + elem_top + ', bottom:' + elem_bottom + ', viewTop:' + view_top + ', viewBottom:' + view_bottom);
 		return (elem_top + h * elem_height < view_bottom && elem_bottom - h * elem_height > view_top);
 	}
 	
 	function rearrangePaintings() {
-		var maxCols = 4;
-		var width = Math.floor(paintingGrid.clientWidth / maxCols - 26);
-		var pageHeight = 0;
+		var maxCols = 4,
+			width = Math.floor(paintingGrid.clientWidth / maxCols - 26),
+			pageHeight = 0;
 		for (var i = 0; i < paintingList.length; i++) {
 			paintingList[i].style.width = width + "px";
-			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 0, offsetL = 0;
-			var prevRowPainting = paintingList[maxCols * (row - 1) + col];
-			var prevColPainting = paintingList[maxCols * row + col - 1];
+			var row = Math.floor(i / maxCols), col = Math.floor(i % maxCols); offsetT = 0, offsetL = 0,
+				prevRowPainting = paintingList[maxCols * (row - 1) + col],
+				prevColPainting = paintingList[maxCols * row + col - 1];
 			if (row > 0) {
 				offsetT += (prevRowPainting.offsetTop + prevRowPainting.offsetHeight);
 			}
@@ -150,11 +150,7 @@ function initPaintingGrid() {
 			paintingList[i].style.left = offsetL + "px";
 			pageHeight = Math.max(pageHeight, offsetT + $(paintingList[i]).outerHeight(true));
 		}
-
-		//TODO: this is not the good place to set the grid's height, as the page div may still not be stretched by the increasing images
-		console.log("final page height:" + pageHeight);
 		$(paintingGrid).height(pageHeight);
-		console.log("offsetheight of page container:" + paintingGrid.offsetHeight);
 	}
 
 	function resize(){

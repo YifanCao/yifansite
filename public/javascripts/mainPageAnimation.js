@@ -15,7 +15,7 @@ function MainPageAnimation() {
     }
 
     //private members
-    var width, height, largeHeader, canvas, ctx, circles, animateID = null, currStateIdx = 0;
+    var width, height, largeHeader, canvas, ctx, circles, animateID = null, currThemeIdx = 0;
 
     var themeSelector = document.getElementsByName("theme-selector");
     var themeOverlay = document.getElementById("theme-overlay");
@@ -49,7 +49,7 @@ function MainPageAnimation() {
         window.addEventListener('resize', resize);
         for (var i = 0; i < themeSelector.length; i++) {
             themeSelector[i].onclick = themeSelectorHandlerWrapper(themeSelector[i], i);
-            if ( currStateIdx == i ) {
+            if ( currThemeIdx == i ) {
                 setThemeMusic(themeSelector[i], i);
             }
         }
@@ -71,16 +71,16 @@ function MainPageAnimation() {
 
     function setThemeMusic(theme, idx) {
         console.log("execute setThemeMusic: idx=" + idx + " theme=" + theme);
-        currStateIdx = idx;
+        currThemeIdx = idx;
         for(var i in circles) {
-            circles[i].state = currStateIdx;
+            circles[i].state = currThemeIdx;
         }
         var audio = document.getElementsByTagName('audio')[0];
         var musicPlayer = document.getElementById('music-player');
         var musicName = document.getElementById('music-name');
         var controlBtn = document.getElementById('control-button');
         //light
-        if (currStateIdx == 0) {
+        if (currThemeIdx == 0) {
             audio.src = '/music/Aimer-Hakuchuumu.mp3';
             musicName.innerHTML = 'Music: Aimer - Hakuchuumu';
             musicPlayer.style.backgroundColor = 'rgba(74, 129, 133, 0.8)';
